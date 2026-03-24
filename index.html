@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>阿如一楼 | 匠心雅居·东方美学空间</title>
+    <!-- 使用现代简洁的字体，并加入优雅的衬线体增强中式韵味 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 (免费图标库) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #FEFAF5;   /* 温暖米白底 */
+            font-family: 'Inter', sans-serif;
+            color: #2C2A29;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* 优雅容器宽度 */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        /* 头部导航 */
+        .navbar {
+            padding: 24px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            background: rgba(254, 250, 245, 0.92);
+            backdrop-filter: blur(12px);
+            z-index: 100;
+            transition: all 0.2s;
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+
+        .logo h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            font-size: 1.9rem;
+            letter-spacing: 2px;
+            color: #9B7B5C;
+            cursor: default;
+        }
+        .logo p {
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            color: #B9A28C;
+            margin-top: 4px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: #3F3A35;
+            transition: color 0.2s;
+            letter-spacing: 1px;
+        }
+        .nav-links a:hover {
+            color: #BC9A6C;
+        }
+
+        /* 移动端菜单 */
+        .menu-toggle {
+            display: none;
+            font-size: 1.6rem;
+            cursor: pointer;
+            color: #5E4B3A;
+        }
+
+        /* 按钮公用 */
+        .btn-primary {
+            background: #DCC29E;
+            border: none;
+            padding: 12px 28px;
+            font-weight: 500;
+            color: #2C2A29;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-size: 0.9rem;
+            display: inline-block;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        .btn-primary:hover {
+            background: #C8AB82;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #DCC29E;
+            padding: 10px 24px;
+            border-radius: 40px;
+            color: #5E4B3A;
+            font-weight: 500;
+            text-decoration: none;
+            transition: 0.2s;
+            display: inline-block;
+        }
+        .btn-outline:hover {
+            background: #DCC29E20;
+            border-color: #BC9A6C;
+        }
+
+        /* Hero 主视觉 */
+        .hero {
+            padding: 80px 0 100px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 48px;
+        }
+        .hero-content {
+            flex: 1.2;
+        }
+        .hero-badge {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #B68B5A;
+            margin-bottom: 16px;
+            display: inline-block;
+            border-left: 3px solid #DCC29E;
+            padding-left: 12px;
+        }
+        .hero-content h2 {
+            font-size: 3.2rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            color: #2F2A25;
+        }
+        .hero-content p {
+            font-size: 1rem;
+            color: #5E554C;
+            max-width: 500px;
+            margin-bottom: 32px;
+        }
+        .hero-actions {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .hero-image {
+            flex: 1;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 25px 40px -20px rgba(0,0,0,0.2);
+        }
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .hero-image:hover img {
+            transform: scale(1.02);
+        }
+
+        /* 通用章节 */
+        section {
+            padding: 80px 0;
+        }
+        .section-title {
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.6rem;
+            font-weight: 500;
+            color: #3F352E;
+            margin-bottom: 16px;
+        }
+        .section-sub {
+            text-align: center;
+            color: #9B8A7A;
+            max-width: 600px;
+            margin: 0 auto 56px auto;
+            font-size: 1rem;
+        }
+
+        /* 产品/作品网格 */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+        .work-card {
+            background: #FFFFFFD9;
+            border-radius: 28px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.02);
+            border: 1px solid #F3EDE5;
+        }
+        .work-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.1);
+            border-color: #EADDCB;
+        }
+        .work-img {
+            height: 260px;
+            overflow: hidden;
+            background: #EADDCB;
+        }
+        .work-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.4s;
+        }
+        .work-card:hover .work-img img {
+            transform: scale(1.05);
+        }
+        .work-info {
+            padding: 24px 20px 28px;
+        }
+        .work-info h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        .work-info p {
+            color: #7A6B5E;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+        .work-tag {
+            font-size: 0.75rem;
+            color: #BC9A6C;
+            letter-spacing: 1px;
+        }
+
+        /* 关于区域 */
+        .about-wrap {
+            display: flex;
+            gap: 60px;
+            align-items: center;
+            flex-wrap: wrap;
+            background: #F7F0E8;
+            border-radius: 48px;
+            padding: 48px;
+        }
+        .about-text {
+            flex: 1;
+        }
+        .about-text h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+        .about-text p {
+            margin-bottom: 20px;
+            color: #4E443C;
+        }
+        .about-img {
+            flex: 1;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 12px 24px -12px rgba(0,0,0,0.15);
+        }
+        .about-img img {
+            width: 100%;
+            display: block;
+        }
+
+        /* 服务/特点区域 */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 40px;
+            margin-top: 20px;
+        }
+        .feature-item {
+            text-align: center;
+            padding: 28px 16px;
+            background: #FFFFFFA0;
+            border-radius: 32px;
+            transition: 0.2s;
+        }
+        .feature-item i {
+            font-size: 2.4rem;
+            color: #C2A074;
+            margin-bottom: 20px;
+        }
+        .feature-item h4 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+        .feature-item p {
+            font-size: 0.85rem;
+            color: #6C5E51;
+        }
+
+        /* 预约/CTA */
+        .cta {
+            background: #2F2A25;
+            border-radius: 48px;
+            text-align: center;
+            padding: 64px 32px;
+            color: #FEF6EE;
+        }
+        .cta h3 {
+            font-size: 2.2rem;
+            font-family: 'Cormorant Garamond', serif;
+            margin-bottom: 16px;
+        }
+        .cta p {
+            max-width: 500px;
+            margin: 0 auto 32px auto;
+            opacity: 0.8;
+        }
+        .cta .btn-primary {
+            background: #E8D3B5;
+            color: #2F2A25;
+        }
+        .cta .btn-primary:hover {
+            background: #f7e5ca;
+        }
+
+        /* 页脚 */
+        footer {
+            background: #F1EAE2;
+            padding: 48px 0 32px;
+            margin-top: 40px;
+            border-top: 1px solid #E2D6CA;
+        }
+        .footer-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 32px;
+        }
+        .footer-col {
+            flex: 1;
+            min-width: 160px;
+        }
+        .footer-col h4 {
+            font-weight: 600;
+            margin-bottom: 18px;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col li {
+            margin-bottom: 10px;
+        }
+        .footer-col a {
+            text-decoration: none;
+            color: #5F554B;
+            font-size: 0.85rem;
+            transition: 0.2s;
+        }
+        .footer-col a:hover {
+            color: #B88D5B;
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 48px;
+            font-size: 0.75rem;
+            color: #8E7D6C;
+        }
+        .social-icons i {
+            font-size: 1.2rem;
+            margin-right: 20px;
+            color: #7B6856;
+            transition: 0.2s;
+        }
+        .social-icons i:hover {
+            color: #BC9A6C;
+        }
+
+        @media (max-width: 880px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: #FEFAF5;
+                padding: 20px 0;
+                gap: 20px;
+            }
+            .nav-links.show {
+                display: flex;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .nav-inner {
+                align-items: center;
+            }
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 40px 0 60px;
+            }
+            .hero-content p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-actions {
+                justify-content: center;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .about-wrap {
+                padding: 28px;
+                flex-direction: column;
+            }
+            .container {
+                padding: 0 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container nav-inner">
+        <div class="logo">
+            <h1>阿如一楼</h1>
+            <p>· 隐逸东方 栖心之所 ·</p>
+        </div>
+        <div class="menu-toggle" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home">首页</a></li>
+            <li><a href="#works">雅室作品</a></li>
+            <li><a href="#about">如壹理念</a></li>
+            <li><a href="#features">雅韵服务</a></li>
+            <li><a href="#contact">访客预约</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main>
+    <!-- Hero 区域 类似官网典雅入口 -->
+    <section id="home">
+        <div class="container hero">
+            <div class="hero-content">
+                <span class="hero-badge">静谧 · 风雅 · 匠心</span>
+                <h2>一处安顿身心<br> 的东方庭园</h2>
+                <p>「阿如一楼」以传统木作与当代美学交融，构筑隐于都市的文人空间。每一寸皆为雅集、茶事、静修而设。</p>
+                <div class="hero-actions">
+                    <a href="#contact" class="btn-primary">预约探访</a>
+                    <a href="#works" class="btn-outline">探索空间</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://picsum.photos/id/104/700/500" alt="东方雅室景观" style="object-fit:cover;">
+                <!-- 图片为示意优雅空间，实际可替换为自有图片。 LoremFlick 优雅自然风格 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 代表作品集 / 精选空间 类似官网展示 -->
+    <section id="works">
+        <div class="container">
+            <div class="section-title">空间 · 雅集</div>
+            <div class="section-sub">每一处细节，都是东方生活哲学的无声诗篇</div>
+            <div class="grid-3">
+                <div class="work-card">
+                    <div class="work-img"><img src="https://picsum.photos/id/30/400/300" alt="听松茶室"></div>
+                    <div class="work-info">
+                        <h3>听松茶室</h3>
+                        <p>榻榻米与竹帘半掩，茶烟袅袅，光影随时间流动。</p>
+                        <div class="work-tag">· 茶空间 ·</div>
+                    </div>
+                </div>
+                <div class="work-card">
+                    <div class="work-img"><img src="https://picsum.photos/id/20/400/300" alt="水墨书房"></div>
+                    <div class="work-info">
+                        <h3>水墨书房</h3>
+                        <p>老榆木书案，笔墨纸砚，静谧私享的阅读沉思角落。</p>
+                        <div class="work-tag">· 文房 ·</div>
+                    </div>
+                </div>
+                <div class="work-card">
+                    <div class="work-img"><img src="https://picsum.photos/id/38/400/300" alt="竹隐庭院"></div>
+                    <div class="work-info">
+                        <h3>竹隐庭院</h3>
+                        <p>枯山水青苔石径，四季景异，可禅修亦可闲谈。</p>
+                        <div class="work-tag">· 庭院 ·</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于如壹 深挖品牌故事 体现“一楼”匠心 -->
+    <section id="about">
+        <div class="container about-wrap">
+            <div class="about-text">
+                <h3>如壹 · 一楼一世界</h3>
+                <p>「阿如一楼」源自宋代文人审美，创立于西子湖畔。我们专注于将古典园林意趣与现代生活尺度融合，打造集茶、书、器、艺为一体的复合式美学空间。</p>
+                <p>主理人深耕传统木作与器物陈列逾十五年，每一间雅室都由匠人亲手打磨，为都市行旅者提供一处可以静观内心、体会时序流转的“一楼”。</p>
+                <a href="#contact" class="btn-outline" style="margin-top: 12px;">了解更多 <i class="fas fa-arrow-right" style="font-size:12px; margin-left:6px;"></i></a>
+            </div>
+            <div class="about-img">
+                <img src="https://picsum.photos/id/169/600/400" alt="中式室内光影">
+            </div>
+        </div>
+    </section>
+
+    <!-- 特色服务 / 体验亮点 -->
+    <section id="features">
+        <div class="container">
+            <div class="section-title">雅韵 · 服务</div>
+            <div class="section-sub">以当代笔触，复现东方日常之美</div>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i class="fas fa-leaf"></i>
+                    <h4>茶事雅集</h4>
+                    <p>定期举办茶会、香道体验，专业茶人引领深度感受宋式点茶。</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-palette"></i>
+                    <h4>文人器物展</h4>
+                    <p>甄选当代手作器物与古董杂项，可赏可藏，传递匠心温度。</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-bed"></i>
+                    <h4>静心居停</h4>
+                    <p>预约制私享客房，沉浸式居住体验，枕溪而眠，清幽自在。</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-dragon"></i>
+                    <h4>定制空间设计</h4>
+                    <p>私宅或会所的东方美学全案设计，从园林到陈设一站式服务。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 预约/联系 CTA 模块 -->
+    <section id="contact">
+        <div class="container cta">
+            <h3>预约探访 · 栖心一楼</h3>
+            <p>每日仅接待少量预约客人，以便您静心感受空间气息。请填写预约信息，我们将尽快与您确认雅集时间。</p>
+            <!-- 简单预约表单，没有后端，只做前端模拟 -->
+            <form id="demoBookingForm" style="max-width: 480px; margin: 0 auto; text-align: left; background: rgba(255,255,245,0.1); padding: 24px 28px; border-radius: 40px;">
+                <div style="margin-bottom: 18px;">
+                    <input type="text" id="visitorName" placeholder="您的姓名" style="width:100%; padding: 12px 16px; border-radius: 60px; border: none; background: #FEFAF5; color: #2C2A29; outline: none;" required>
+                </div>
+                <div style="margin-bottom: 18px;">
+                    <input type="email" id="visitorEmail" placeholder="电子邮箱 / 手机号" style="width:100%; padding: 12px 16px; border-radius: 60px; border: none; background: #FEFAF5; outline: none;" required>
+                </div>
+                <div style="margin-bottom: 22px;">
+                    <select id="visitType" style="width:100%; padding: 12px 16px; border-radius: 60px; border: none; background: #FEFAF5; color: #3F352E;">
+                        <option value="茶会雅集">茶会雅集体验</option>
+                        <option value="空间参观">空间参观导览</option>
+                        <option value="私享居停">私享居停咨询</option>
+                        <option value="设计合作">设计合作洽谈</option>
+                    </select>
+                </div>
+                <div style="text-align: center;">
+                    <button type="button" id="bookingBtn" class="btn-primary" style="background: #E8D3B5; width: 100%;">提交预约意向</button>
+                </div>
+                <p id="formFeedback" style="font-size: 0.75rem; margin-top: 14px; text-align: center; color:#FFF2E2;"></p>
+            </form>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>阿如一楼</h4>
+                <ul>
+                    <li><a href="#home">关于我们</a></li>
+                    <li><a href="#works">雅室鉴赏</a></li>
+                    <li><a href="#">媒体联络</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>访客指南</h4>
+                <ul>
+                    <li><a href="#">预约方式</a></li>
+                    <li><a href="#">交通指引</a></li>
+                    <li><a href="#">空间公约</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>联系方式</h4>
+                <ul>
+                    <li><i class="fas fa-phone-alt" style="margin-right: 8px;"></i> 0571-8681 2617</li>
+                    <li><i class="fas fa-envelope"></i>  aruyilou@culture.cn</li>
+                    <li>杭州市 · 西湖区 满觉陇路</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>关注我们</h4>
+                <div class="social-icons">
+                    <i class="fab fa-weixin"></i>
+                    <i class="fab fa-weibo"></i>
+                    <i class="fab fa-xiaohongshu"></i>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2025 阿如一楼文化发展有限公司 | 东方雅致生活研究所 | 图片仅为意境参考
+        </div>
+    </div>
+</footer>
+
+<script>
+    // 移动端菜单交互
+    const menuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+    if(menuBtn) {
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('show');
+        });
+    }
+    // 点击导航链接后收起菜单（移动友好）
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            if(navLinks.classList.contains('show')) {
+                navLinks.classList.remove('show');
+            }
+        });
+    });
+
+    // 简单表单交互 (模拟预约反馈，无后端)
+    const bookingBtn = document.getElementById('bookingBtn');
+    const feedback = document.getElementById('formFeedback');
+    if(bookingBtn) {
+        bookingBtn.addEventListener('click', function(e) {
+            const nameInput = document.getElementById('visitorName');
+            const emailInput = document.getElementById('visitorEmail');
+            const name = nameInput ? nameInput.value.trim() : '';
+            const email = emailInput ? emailInput.value.trim() : '';
+            if(!name || !email) {
+                feedback.innerHTML = '✨ 请留下您的称呼与联系方式，管家将为您安排雅集 ✨';
+                feedback.style.color = "#FFEFD6";
+                return;
+            }
+            // 模拟提交成功提示
+            feedback.innerHTML = `感谢 ${name}，已收到您的预约意向。我们的雅士顾问将在24小时内与您联系，共赴一楼之约。`;
+            feedback.style.color = "#FCE9CE";
+            // 可清空部分输入体验，但不强制重置
+            if(nameInput) nameInput.value = '';
+            if(emailInput) emailInput.value = '';
+            // 可选重置选择框
+            setTimeout(() => {
+                feedback.innerHTML = '';
+            }, 4000);
+        });
+    }
+
+    // 平滑滚动（锚点）
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if(targetId === "#" || targetId === "") return;
+            const targetElement = document.querySelector(targetId);
+            if(targetElement) {
+                e.preventDefault();
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // 极简加载效果，让卡片图片动态可访问（图片均来自 picsum 稳定占位，展现官网类似排版）
+    // 使交互更贴合品牌感
+    console.log("阿如一楼官网已加载 — 东方雅境，静候君临");
+</script>
+</body>
+</html>
