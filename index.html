@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>阿如一楼 | 匠心雅居·东方美学空间</title>
-    <!-- 使用现代简洁的字体，并加入优雅的衬线体增强中式韵味 -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-    <!-- Font Awesome 6 (免费图标库) -->
+    <title>小当家Onestepeat | 英式中餐 · 伦敦味道</title>
+    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -16,428 +16,449 @@
         }
 
         body {
-            background-color: #FEFAF5;   /* 温暖米白底 */
-            font-family: 'Inter', sans-serif;
-            color: #2C2A29;
-            line-height: 1.5;
+            font-family: 'Inter', 'Noto Serif SC', sans-serif;
+            background-color: #fffef7;
+            color: #2c1a0c;
             scroll-behavior: smooth;
         }
 
-        /* 优雅容器宽度 */
+        /* 中式红黄主色调变量 */
+        :root {
+            --red-gold: #c72a2a;
+            --deep-red: #a51c1c;
+            --golden: #e6b422;
+            --soft-gold: #f5d742;
+            --dark-wood: #4a2a1a;
+            --warm-bg: #fff8ed;
+            --shadow-sm: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+            --shadow-md: 0 20px 25px -12px rgba(0, 0, 0, 0.1);
+        }
+
         .container {
             max-width: 1280px;
             margin: 0 auto;
-            padding: 0 32px;
+            padding: 0 24px;
         }
 
-        /* 头部导航 */
+        /* 导航栏 */
         .navbar {
-            padding: 24px 0;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            background: rgba(255, 248, 237, 0.96);
+            backdrop-filter: blur(6px);
+            padding: 16px 0;
             position: sticky;
             top: 0;
-            background: rgba(254, 250, 245, 0.92);
-            backdrop-filter: blur(12px);
             z-index: 100;
-            transition: all 0.2s;
+            border-bottom: 2px solid var(--golden);
+            box-shadow: var(--shadow-sm);
         }
 
-        .nav-inner {
+        .nav-wrapper {
             display: flex;
             justify-content: space-between;
-            align-items: baseline;
+            align-items: center;
             flex-wrap: wrap;
         }
 
-        .logo h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 500;
-            font-size: 1.9rem;
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            font-family: 'Noto Serif SC', serif;
+            background: linear-gradient(135deg, var(--red-gold) 30%, var(--golden) 80%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             letter-spacing: 2px;
-            color: #9B7B5C;
-            cursor: default;
-        }
-        .logo p {
-            font-size: 0.75rem;
-            letter-spacing: 3px;
-            color: #B9A28C;
-            margin-top: 4px;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 40px;
-            list-style: none;
+        .logo span {
+            font-size: 1rem;
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+            color: var(--deep-red);
+            font-weight: 500;
         }
+
         .nav-links a {
+            margin-left: 28px;
             text-decoration: none;
+            color: var(--dark-wood);
             font-weight: 500;
-            font-size: 0.95rem;
-            color: #3F3A35;
-            transition: color 0.2s;
-            letter-spacing: 1px;
-        }
-        .nav-links a:hover {
-            color: #BC9A6C;
+            transition: 0.2s;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 4px;
         }
 
-        /* 移动端菜单 */
-        .menu-toggle {
-            display: none;
-            font-size: 1.6rem;
-            cursor: pointer;
-            color: #5E4B3A;
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--red-gold);
+            border-bottom-color: var(--golden);
         }
 
-        /* 按钮公用 */
-        .btn-primary {
-            background: #DCC29E;
-            border: none;
-            padding: 12px 28px;
-            font-weight: 500;
-            color: #2C2A29;
-            border-radius: 40px;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            font-size: 0.9rem;
+        /* 按钮样式 */
+        .btn {
             display: inline-block;
+            background-color: var(--red-gold);
+            color: white;
+            font-weight: 600;
+            padding: 12px 32px;
+            border-radius: 40px;
             text-decoration: none;
-            letter-spacing: 1px;
-        }
-        .btn-primary:hover {
-            background: #C8AB82;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+            transition: all 0.25s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .btn-outline {
             background: transparent;
-            border: 1px solid #DCC29E;
-            padding: 10px 24px;
-            border-radius: 40px;
-            color: #5E4B3A;
-            font-weight: 500;
-            text-decoration: none;
-            transition: 0.2s;
-            display: inline-block;
-        }
-        .btn-outline:hover {
-            background: #DCC29E20;
-            border-color: #BC9A6C;
+            border: 2px solid var(--red-gold);
+            color: var(--red-gold);
         }
 
-        /* Hero 主视觉 */
+        .btn-outline:hover {
+            background: var(--red-gold);
+            color: white;
+        }
+
+        .btn:hover {
+            background-color: var(--deep-red);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Hero区 */
         .hero {
-            padding: 80px 0 100px;
+            background: linear-gradient(107deg, #2a1506 0%, #5a2e1a 100%);
+            background-blend-mode: overlay;
+            background-size: cover;
+            background-position: center 30%;
+            min-height: 85vh;
             display: flex;
-            flex-wrap: wrap;
             align-items: center;
-            justify-content: space-between;
-            gap: 48px;
+            position: relative;
+            border-bottom: 6px solid var(--golden);
+            background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.55)), url('https://images.pexels.com/photos/6745741/pexels-photo-6745741.jpeg?auto=compress&cs=tinysrgb&w=1600');
+            background-size: cover;
+            background-position: center 55%;
         }
+
         .hero-content {
-            flex: 1.2;
+            max-width: 650px;
+            color: white;
+            padding: 2rem 1rem;
         }
-        .hero-badge {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #B68B5A;
-            margin-bottom: 16px;
-            display: inline-block;
-            border-left: 3px solid #DCC29E;
-            padding-left: 12px;
-        }
-        .hero-content h2 {
-            font-size: 3.2rem;
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 500;
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            font-family: 'Noto Serif SC', serif;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
             line-height: 1.2;
-            margin-bottom: 24px;
-            color: #2F2A25;
+            margin-bottom: 1rem;
         }
+
         .hero-content p {
-            font-size: 1rem;
-            color: #5E554C;
-            max-width: 500px;
-            margin-bottom: 32px;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
         }
-        .hero-actions {
+
+        .hero-buttons {
             display: flex;
             gap: 20px;
             flex-wrap: wrap;
         }
-        .hero-image {
-            flex: 1;
-            border-radius: 32px;
-            overflow: hidden;
-            box-shadow: 0 25px 40px -20px rgba(0,0,0,0.2);
-        }
-        .hero-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.5s ease;
-        }
-        .hero-image:hover img {
-            transform: scale(1.02);
-        }
 
-        /* 通用章节 */
+        /* 通用区块 */
         section {
             padding: 80px 0;
         }
+
         .section-title {
             text-align: center;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.6rem;
-            font-weight: 500;
-            color: #3F352E;
-            margin-bottom: 16px;
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: 'Noto Serif SC', serif;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            color: var(--deep-red);
         }
-        .section-sub {
-            text-align: center;
-            color: #9B8A7A;
-            max-width: 600px;
-            margin: 0 auto 56px auto;
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--golden);
+            margin: 12px auto 0;
+            border-radius: 4px;
+        }
+
+        /* 菜品分类与卡片 */
+        .menu-categories {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: 40px;
+        }
+        .category-btn {
+            background: #f3e9d2;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            color: var(--dark-wood);
+            cursor: pointer;
+            transition: 0.2s;
             font-size: 1rem;
         }
+        .category-btn.active, .category-btn:hover {
+            background: var(--red-gold);
+            color: white;
+            box-shadow: 0 4px 10px rgba(199,42,42,0.3);
+        }
 
-        /* 产品/作品网格 */
-        .grid-3 {
+        .menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 32px;
+            margin-top: 20px;
         }
-        .work-card {
-            background: #FFFFFFD9;
-            border-radius: 28px;
+        .menu-card {
+            background: white;
+            border-radius: 32px;
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
-            box-shadow: 0 6px 14px rgba(0,0,0,0.02);
-            border: 1px solid #F3EDE5;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #faeec2;
         }
-        .work-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.1);
-            border-color: #EADDCB;
+        .menu-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
         }
-        .work-img {
-            height: 260px;
-            overflow: hidden;
-            background: #EADDCB;
-        }
-        .work-img img {
+        .menu-img {
             width: 100%;
-            height: 100%;
+            height: 200px;
             object-fit: cover;
-            transition: 0.4s;
+            background: #f3e3c9;
         }
-        .work-card:hover .work-img img {
-            transform: scale(1.05);
+        .menu-info {
+            padding: 20px;
         }
-        .work-info {
-            padding: 24px 20px 28px;
-        }
-        .work-info h3 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.6rem;
-            font-weight: 500;
+        .menu-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--deep-red);
             margin-bottom: 8px;
         }
-        .work-info p {
-            color: #7A6B5E;
+        .menu-desc {
             font-size: 0.9rem;
-            margin-bottom: 16px;
+            color: #5a4a38;
+            margin-bottom: 12px;
+            line-height: 1.4;
         }
-        .work-tag {
-            font-size: 0.75rem;
-            color: #BC9A6C;
-            letter-spacing: 1px;
+        .menu-price {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--golden);
+            margin-bottom: 12px;
         }
 
-        /* 关于区域 */
-        .about-wrap {
+        /* 关于品牌 */
+        .about-brand {
+            background: var(--warm-bg);
+            border-top: 1px solid #ffe1aa;
+            border-bottom: 1px solid #ffe1aa;
+        }
+        .about-grid {
             display: flex;
-            gap: 60px;
-            align-items: center;
             flex-wrap: wrap;
-            background: #F7F0E8;
-            border-radius: 48px;
-            padding: 48px;
+            gap: 40px;
+            align-items: center;
         }
         .about-text {
-            flex: 1;
-        }
-        .about-text h3 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.2rem;
-            font-weight: 500;
-            margin-bottom: 20px;
+            flex: 1.5;
         }
         .about-text p {
             margin-bottom: 20px;
-            color: #4E443C;
+            line-height: 1.6;
+            font-size: 1.05rem;
         }
         .about-img {
             flex: 1;
             border-radius: 32px;
             overflow: hidden;
-            box-shadow: 0 12px 24px -12px rgba(0,0,0,0.15);
+            box-shadow: var(--shadow-md);
         }
         .about-img img {
             width: 100%;
+            height: auto;
             display: block;
         }
 
-        /* 服务/特点区域 */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 40px;
-            margin-top: 20px;
-        }
-        .feature-item {
-            text-align: center;
-            padding: 28px 16px;
-            background: #FFFFFFA0;
-            border-radius: 32px;
-            transition: 0.2s;
-        }
-        .feature-item i {
-            font-size: 2.4rem;
-            color: #C2A074;
-            margin-bottom: 20px;
-        }
-        .feature-item h4 {
-            font-size: 1.3rem;
-            font-weight: 500;
-            margin-bottom: 12px;
-        }
-        .feature-item p {
-            font-size: 0.85rem;
-            color: #6C5E51;
-        }
-
-        /* 预约/CTA */
-        .cta {
-            background: #2F2A25;
-            border-radius: 48px;
-            text-align: center;
-            padding: 64px 32px;
-            color: #FEF6EE;
-        }
-        .cta h3 {
-            font-size: 2.2rem;
-            font-family: 'Cormorant Garamond', serif;
-            margin-bottom: 16px;
-        }
-        .cta p {
-            max-width: 500px;
-            margin: 0 auto 32px auto;
-            opacity: 0.8;
-        }
-        .cta .btn-primary {
-            background: #E8D3B5;
-            color: #2F2A25;
-        }
-        .cta .btn-primary:hover {
-            background: #f7e5ca;
-        }
-
-        /* 页脚 */
-        footer {
-            background: #F1EAE2;
-            padding: 48px 0 32px;
-            margin-top: 40px;
-            border-top: 1px solid #E2D6CA;
-        }
-        .footer-grid {
+        /* 预约 + 评价区域 (Google Forms 嵌入) */
+        .booking-reviews {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 32px;
+            gap: 40px;
         }
-        .footer-col {
-            flex: 1;
-            min-width: 160px;
+        .booking-form {
+            flex: 1.2;
+            background: #fffaf2;
+            padding: 30px;
+            border-radius: 32px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #ffeaaf;
         }
-        .footer-col h4 {
-            font-weight: 600;
-            margin-bottom: 18px;
-            font-size: 1rem;
-            letter-spacing: 1px;
+        .reviews-section {
+            flex: 0.9;
+            background: #fffaf2;
+            padding: 30px;
+            border-radius: 32px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #ffeaaf;
         }
-        .footer-col ul {
-            list-style: none;
+        
+        /* Google Forms 嵌入样式 */
+        .google-form-container {
+            width: 100%;
+            margin-top: 10px;
         }
-        .footer-col li {
-            margin-bottom: 10px;
+        .google-form-iframe {
+            width: 100%;
+            min-height: 600px;
+            border: none;
+            border-radius: 24px;
+            background: white;
+            transition: height 0.3s ease;
         }
-        .footer-col a {
-            text-decoration: none;
-            color: #5F554B;
+        .form-note {
+            margin-top: 16px;
+            padding: 12px;
+            background: #fff3e0;
+            border-radius: 20px;
             font-size: 0.85rem;
-            transition: 0.2s;
-        }
-        .footer-col a:hover {
-            color: #B88D5B;
-        }
-        .copyright {
+            color: #8b6b3c;
             text-align: center;
-            margin-top: 48px;
-            font-size: 0.75rem;
-            color: #8E7D6C;
+            border-left: 4px solid var(--golden);
         }
-        .social-icons i {
-            font-size: 1.2rem;
-            margin-right: 20px;
-            color: #7B6856;
-            transition: 0.2s;
+        .form-note i {
+            color: var(--red-gold);
+            margin-right: 6px;
         }
-        .social-icons i:hover {
-            color: #BC9A6C;
+        
+        .review-card {
+            background: white;
+            padding: 18px;
+            border-radius: 24px;
+            margin-bottom: 20px;
+            border-left: 6px solid var(--golden);
+        }
+        .review-name {
+            font-weight: 700;
+            color: var(--deep-red);
+        }
+        .review-stars {
+            color: var(--golden);
+            margin: 8px 0;
+        }
+        .review-text {
+            color: #3a2a1c;
         }
 
-        @media (max-width: 880px) {
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                width: 100%;
-                background: #FEFAF5;
-                padding: 20px 0;
-                gap: 20px;
+        /* 地图区 */
+        .map-area {
+            background: #2f241b;
+            color: white;
+        }
+        .map-container {
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            margin-top: 24px;
+        }
+        iframe {
+            width: 100%;
+            height: 380px;
+            border: 0;
+        }
+        .address-details {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.1rem;
+        }
+        .address-details i {
+            color: var(--golden);
+            margin-right: 8px;
+        }
+
+        /* 社交链接 */
+        .social-links {
+            text-align: center;
+            padding: 40px 0 30px;
+            background: #fff3e0;
+            border-top: 1px solid var(--golden);
+        }
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 52px;
+            height: 52px;
+            background: var(--red-gold);
+            color: white;
+            border-radius: 50%;
+            margin: 0 12px;
+            font-size: 1.8rem;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .social-icons a:hover {
+            background: var(--golden);
+            color: var(--deep-red);
+            transform: scale(1.05);
+        }
+        footer {
+            background: #1f140c;
+            color: #ccb694;
+            text-align: center;
+            padding: 24px;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
             }
-            .nav-links.show {
-                display: flex;
-            }
-            .menu-toggle {
-                display: block;
-            }
-            .nav-inner {
-                align-items: center;
-            }
-            .hero {
-                flex-direction: column;
-                text-align: center;
-                padding: 40px 0 60px;
-            }
-            .hero-content p {
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .hero-actions {
-                justify-content: center;
+            .hero-content h1 {
+                font-size: 2.4rem;
             }
             .section-title {
                 font-size: 2rem;
             }
-            .about-wrap {
-                padding: 28px;
+            .nav-wrapper {
                 flex-direction: column;
+                gap: 12px;
             }
-            .container {
-                padding: 0 24px;
+            .nav-links a {
+                margin: 0 12px;
+            }
+            .hero-buttons .btn {
+                padding: 10px 24px;
+            }
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+            .google-form-iframe {
+                min-height: 550px;
+            }
+        }
+        @media (max-width: 480px) {
+            .google-form-iframe {
+                min-height: 580px;
             }
         }
     </style>
@@ -445,259 +466,234 @@
 <body>
 
 <nav class="navbar">
-    <div class="container nav-inner">
-        <div class="logo">
-            <h1>阿如一楼</h1>
-            <p>· 隐逸东方 栖心之所 ·</p>
+    <div class="container nav-wrapper">
+        <div class="logo">小当家 Onestepeat <span>· 英式中餐</span></div>
+        <div class="nav-links">
+            <a href="#home">首页</a>
+            <a href="#menu">菜单</a>
+            <a href="#about">故事</a>
+            <a href="#booking">订座</a>
+            <a href="#contact">联系</a>
         </div>
-        <div class="menu-toggle" id="mobileMenuBtn">
-            <i class="fas fa-bars"></i>
-        </div>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#home">首页</a></li>
-            <li><a href="#works">雅室作品</a></li>
-            <li><a href="#about">如壹理念</a></li>
-            <li><a href="#features">雅韵服务</a></li>
-            <li><a href="#contact">访客预约</a></li>
-        </ul>
     </div>
 </nav>
 
-<main>
-    <!-- Hero 区域 类似官网典雅入口 -->
-    <section id="home">
-        <div class="container hero">
-            <div class="hero-content">
-                <span class="hero-badge">静谧 · 风雅 · 匠心</span>
-                <h2>一处安顿身心<br> 的东方庭园</h2>
-                <p>「阿如一楼」以传统木作与当代美学交融，构筑隐于都市的文人空间。每一寸皆为雅集、茶事、静修而设。</p>
-                <div class="hero-actions">
-                    <a href="#contact" class="btn-primary">预约探访</a>
-                    <a href="#works" class="btn-outline">探索空间</a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <img src="https://picsum.photos/id/104/700/500" alt="东方雅室景观" style="object-fit:cover;">
-                <!-- 图片为示意优雅空间，实际可替换为自有图片。 LoremFlick 优雅自然风格 -->
-            </div>
-        </div>
-    </section>
-
-    <!-- 代表作品集 / 精选空间 类似官网展示 -->
-    <section id="works">
-        <div class="container">
-            <div class="section-title">空间 · 雅集</div>
-            <div class="section-sub">每一处细节，都是东方生活哲学的无声诗篇</div>
-            <div class="grid-3">
-                <div class="work-card">
-                    <div class="work-img"><img src="https://picsum.photos/id/30/400/300" alt="听松茶室"></div>
-                    <div class="work-info">
-                        <h3>听松茶室</h3>
-                        <p>榻榻米与竹帘半掩，茶烟袅袅，光影随时间流动。</p>
-                        <div class="work-tag">· 茶空间 ·</div>
-                    </div>
-                </div>
-                <div class="work-card">
-                    <div class="work-img"><img src="https://picsum.photos/id/20/400/300" alt="水墨书房"></div>
-                    <div class="work-info">
-                        <h3>水墨书房</h3>
-                        <p>老榆木书案，笔墨纸砚，静谧私享的阅读沉思角落。</p>
-                        <div class="work-tag">· 文房 ·</div>
-                    </div>
-                </div>
-                <div class="work-card">
-                    <div class="work-img"><img src="https://picsum.photos/id/38/400/300" alt="竹隐庭院"></div>
-                    <div class="work-info">
-                        <h3>竹隐庭院</h3>
-                        <p>枯山水青苔石径，四季景异，可禅修亦可闲谈。</p>
-                        <div class="work-tag">· 庭院 ·</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 关于如壹 深挖品牌故事 体现“一楼”匠心 -->
-    <section id="about">
-        <div class="container about-wrap">
-            <div class="about-text">
-                <h3>如壹 · 一楼一世界</h3>
-                <p>「阿如一楼」源自宋代文人审美，创立于西子湖畔。我们专注于将古典园林意趣与现代生活尺度融合，打造集茶、书、器、艺为一体的复合式美学空间。</p>
-                <p>主理人深耕传统木作与器物陈列逾十五年，每一间雅室都由匠人亲手打磨，为都市行旅者提供一处可以静观内心、体会时序流转的“一楼”。</p>
-                <a href="#contact" class="btn-outline" style="margin-top: 12px;">了解更多 <i class="fas fa-arrow-right" style="font-size:12px; margin-left:6px;"></i></a>
-            </div>
-            <div class="about-img">
-                <img src="https://picsum.photos/id/169/600/400" alt="中式室内光影">
-            </div>
-        </div>
-    </section>
-
-    <!-- 特色服务 / 体验亮点 -->
-    <section id="features">
-        <div class="container">
-            <div class="section-title">雅韵 · 服务</div>
-            <div class="section-sub">以当代笔触，复现东方日常之美</div>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <i class="fas fa-leaf"></i>
-                    <h4>茶事雅集</h4>
-                    <p>定期举办茶会、香道体验，专业茶人引领深度感受宋式点茶。</p>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-palette"></i>
-                    <h4>文人器物展</h4>
-                    <p>甄选当代手作器物与古董杂项，可赏可藏，传递匠心温度。</p>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-bed"></i>
-                    <h4>静心居停</h4>
-                    <p>预约制私享客房，沉浸式居住体验，枕溪而眠，清幽自在。</p>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-dragon"></i>
-                    <h4>定制空间设计</h4>
-                    <p>私宅或会所的东方美学全案设计，从园林到陈设一站式服务。</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 预约/联系 CTA 模块 -->
-    <section id="contact">
-        <div class="container cta">
-            <h3>预约探访 · 栖心一楼</h3>
-            <p>每日仅接待少量预约客人，以便您静心感受空间气息。请填写预约信息，我们将尽快与您确认雅集时间。</p>
-            <!-- 简单预约表单，没有后端，只做前端模拟 -->
-            <form id="demoBookingForm" style="max-width: 480px; margin: 0 auto; text-align: left; background: rgba(255,255,245,0.1); padding: 24px 28px; border-radius: 40px;">
-                <div style="margin-bottom: 18px;">
-                    <input type="text" id="visitorName" placeholder="您的姓名" style="width:100%; padding: 12px 16px; border-radius: 60px; border: none; background: #FEFAF5; color: #2C2A29; outline: none;" required>
-                </div>
-                <div style="margin-bottom: 18px;">
-                    <input type="email" id="visitorEmail" placeholder="电子邮箱 / 手机号" style="width:100%; padding: 12px 16px; border-radius: 60px; border: none; background: #FEFAF5; outline: none;" required>
-                </div>
-                <div style="margin-bottom: 22px;">
-                    <select id="visitType" style="width:100%; padding: 12px 16px; border-radius: 60px; border: none; background: #FEFAF5; color: #3F352E;">
-                        <option value="茶会雅集">茶会雅集体验</option>
-                        <option value="空间参观">空间参观导览</option>
-                        <option value="私享居停">私享居停咨询</option>
-                        <option value="设计合作">设计合作洽谈</option>
-                    </select>
-                </div>
-                <div style="text-align: center;">
-                    <button type="button" id="bookingBtn" class="btn-primary" style="background: #E8D3B5; width: 100%;">提交预约意向</button>
-                </div>
-                <p id="formFeedback" style="font-size: 0.75rem; margin-top: 14px; text-align: center; color:#FFF2E2;"></p>
-            </form>
-        </div>
-    </section>
-</main>
-
-<footer>
-    <div class="container">
-        <div class="footer-grid">
-            <div class="footer-col">
-                <h4>阿如一楼</h4>
-                <ul>
-                    <li><a href="#home">关于我们</a></li>
-                    <li><a href="#works">雅室鉴赏</a></li>
-                    <li><a href="#">媒体联络</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>访客指南</h4>
-                <ul>
-                    <li><a href="#">预约方式</a></li>
-                    <li><a href="#">交通指引</a></li>
-                    <li><a href="#">空间公约</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>联系方式</h4>
-                <ul>
-                    <li><i class="fas fa-phone-alt" style="margin-right: 8px;"></i> 0571-8681 2617</li>
-                    <li><i class="fas fa-envelope"></i>  aruyilou@culture.cn</li>
-                    <li>杭州市 · 西湖区 满觉陇路</li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>关注我们</h4>
-                <div class="social-icons">
-                    <i class="fab fa-weixin"></i>
-                    <i class="fab fa-weibo"></i>
-                    <i class="fab fa-xiaohongshu"></i>
-                </div>
-            </div>
-        </div>
-        <div class="copyright">
-            © 2025 阿如一楼文化发展有限公司 | 东方雅致生活研究所 | 图片仅为意境参考
+<!-- Hero区 -->
+<section id="home" class="hero">
+    <div class="container hero-content">
+        <h1>英伦烟火气<br>正宗中式家味</h1>
+        <p>传承东方技艺，融合英式风尚。小当家Onestepeat 邀您品鉴地道"英式中餐"新典范。</p>
+        <div class="hero-buttons">
+            <a href="#menu" class="btn">探索菜单 <i class="fas fa-utensils"></i></a>
+            <a href="#booking" class="btn btn-outline">立即预订</a>
         </div>
     </div>
+</section>
+
+<!-- 菜单展示区 -->
+<section id="menu">
+    <div class="container">
+        <h2 class="section-title">经典 · 风味菜单</h2>
+        <div id="menu-categories" class="menu-categories"></div>
+        <div id="menu-grid-container" class="menu-grid">
+            <div style="text-align:center; grid-column:1/-1;">加载英式经典中餐美味...</div>
+        </div>
+    </div>
+</section>
+
+<!-- 关于品牌 -->
+<section id="about" class="about-brand">
+    <div class="container about-grid">
+        <div class="about-text">
+            <h2 class="section-title" style="text-align:left; margin-bottom:1rem;">关于小当家</h2>
+            <p>「小当家Onestepeat」诞生于伦敦Soho，将粤式点心、川式热炒与英伦本土食材完美结合。主厨团队来自中国各地，以"古法新作"演绎英式中餐独特风格——酸甜柠檬鸡、香脆椒盐鱿鱼、黑椒牛肉配薯蓉，每一道都承载匠心。</p>
+            <p>我们坚信，好的中餐不止于美味，更是文化桥梁。餐厅装修融入红灯笼、木雕窗棂，却又不失现代英伦感。连续两年荣获"伦敦最佳中餐融合餐厅"提名。</p>
+            <a href="#booking" class="btn" style="margin-top:16px;">预约品味之旅 →</a>
+        </div>
+        <div class="about-img">
+            <img src="https://images.pexels.com/photos/3764642/pexels-photo-3764642.jpeg?auto=compress&cs=tinysrgb&w=800" alt="小当家餐厅内景" loading="lazy">
+        </div>
+    </div>
+</section>
+
+<!-- 预约 + 评价区域 (已替换为您指定的 Google Forms 链接) -->
+<section id="booking">
+    <div class="container booking-reviews">
+        <div class="booking-form">
+            <h3 style="font-size:1.8rem; color:var(--deep-red); margin-bottom:20px;">📅 预留餐桌</h3>
+            <div class="google-form-container">
+                <!-- 已使用您提供的 Google Forms 预约链接 -->
+                <iframe 
+                    class="google-form-iframe"
+                    src="https://docs.google.com/forms/d/e/1FAIpQLSfxVWH_uCvnNmhFyxx7x8PTxPe7So4yw1R9K5RUH5YtsmPOsQ/viewform?embedded=true"
+                    frameborder="0"
+                    marginheight="0"
+                    marginwidth="0"
+                    title="小当家Onestepeat预约表单">
+                    加载中...
+                </iframe>
+                <div class="form-note">
+                    <i class="fas fa-envelope"></i> 提交后，我们将通过邮件发送确认通知给您
+                </div>
+                <div class="form-note" style="background:#ffe8d4; margin-top:8px;">
+                    <i class="fas fa-shield-alt"></i> 您的信息将安全存储于 Google 云端，仅用于预订确认
+                </div>
+            </div>
+        </div>
+
+        <div class="reviews-section">
+            <h3 style="font-size:1.6rem; color:var(--deep-red); margin-bottom:24px;">🍜 食客之声</h3>
+            <div id="reviews-list">
+                <div class="review-card"><div class="review-name">Sophia L.</div><div class="review-stars">★★★★★</div><div class="review-text">"在伦敦吃过最棒的左宗棠鸡！融合了英式蜂蜜芥末酱，创意满分。"</div></div>
+                <div class="review-card"><div class="review-name">James Chen</div><div class="review-stars">★★★★☆</div><div class="review-text">"点心拼盘惊艳，虾饺和烧卖超正宗。服务热情。"</div></div>
+                <div class="review-card"><div class="review-name">Emily Watson</div><div class="review-stars">★★★★★</div><div class="review-text">"小当家辣子鸡配薯条很奇妙，融合得刚刚好，推荐预约。"</div></div>
+                <div class="review-card"><div class="review-name">David Wong</div><div class="review-stars">★★★★★</div><div class="review-text">"黑椒牛肉佐薯蓉绝了！服务态度超好，餐厅氛围很有中式韵味。"</div></div>
+            </div>
+            <div style="margin-top: 16px; text-align: center;">
+                <a href="#" style="color:var(--red-gold); text-decoration:none; font-weight:500;">查看全部评价 <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 配置邮件通知的提示区 -->
+<section style="padding: 20px 0 40px; background: linear-gradient(to right, #fff8ed, #fffaf2);">
+    <div class="container">
+        <div style="background: #fff; border-radius: 28px; padding: 24px 28px; box-shadow: var(--shadow-sm); border-left: 6px solid var(--golden);">
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <i class="fas fa-bell" style="font-size: 2rem; color: var(--red-gold);"></i>
+                <div style="flex: 1;">
+                    <h4 style="color: var(--deep-red); margin-bottom: 8px;">📧 如何接收预约邮件通知？</h4>
+                    <p style="color: #5a4a38; line-height: 1.5; font-size: 0.95rem;">
+                        在 Google Forms 的「<strong>回复</strong>」标签页 → 点击「<strong>⋮</strong>」菜单 → 选择「<strong>获取新回复的电子邮件通知</strong>」，即可每次预约自动收到邮件。
+                    </p>
+                </div>
+                <div>
+                    <a href="https://support.google.com/docs/answer/2917686?hl=zh-Hans" target="_blank" class="btn" style="padding: 10px 24px; font-size: 0.9rem;">
+                        查看教程 <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 地址地图区 -->
+<section id="contact">
+    <div class="container map-area" style="background:transparent; color:inherit; padding:0 0 30px 0;">
+        <div style="background:#2f241b; border-radius:48px; padding:40px 30px;">
+            <h2 class="section-title" style="color:#f5d742;">访味伦敦</h2>
+            <div class="map-container">
+                <iframe src="https://maps.google.com/maps?q=China%20Town%20London%20Gerrard%20Street&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <div class="address-details">
+                <i class="fas fa-map-marker-alt"></i> 48 Gerrard Street, London W1D 5QL, 英国<br>
+                <i class="fas fa-phone-alt"></i> +44 20 7494 2334 &nbsp;|&nbsp; <i class="far fa-clock"></i> 每日 12:00–22:30
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 社交链接区 -->
+<div class="social-links">
+    <div class="container">
+        <h3 style="color:var(--deep-red); margin-bottom:24px;">@小当家Onestepeat · 烟火相连</h3>
+        <div class="social-icons">
+            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-weixin"></i></a>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>© 2025 小当家 Onestepeat | 英式中餐新滋味 · 源自匠心 | 预约通过 Google Forms 安全提交</p>
 </footer>
 
 <script>
-    // 移动端菜单交互
-    const menuBtn = document.getElementById('mobileMenuBtn');
-    const navLinks = document.getElementById('navLinks');
-    if(menuBtn) {
-        menuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('show');
-        });
-    }
-    // 点击导航链接后收起菜单（移动友好）
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', () => {
-            if(navLinks.classList.contains('show')) {
-                navLinks.classList.remove('show');
-            }
-        });
-    });
+    // 菜单数据与渲染 (保持原有功能)
+    (function() {
+        const mockMenuData = {
+            categories: [
+                { id: "all", name: "全部" },
+                { id: "signature", name: "招牌·必点" },
+                { id: "stirfry", name: "镬气小炒" },
+                { id: "dimsum", name: "点心·蒸点" },
+                { id: "fusion", name: "英式融合" }
+            ],
+            items: [
+                { id: 1, name: "柠檬蜜糖脆皮鸡", description: "英式蜂蜜柠檬酱，外酥里嫩", price: "15.80", category: "signature", img: "https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?auto=compress&cs=tinysrgb&w=400" },
+                { id: 2, name: "黑椒牛肉佐薯蓉", description: "安格斯牛肉，黑椒汁浓郁", price: "18.90", category: "signature", img: "https://images.pexels.com/photos/3186654/pexels-photo-3186654.jpeg?auto=compress&cs=tinysrgb&w=400" },
+                { id: 3, name: "招牌杨州炒饭", description: "叉烧虾仁蛋香，英式炒饭金奖", price: "12.50", category: "stirfry", img: "https://images.pexels.com/photos/7231986/pexels-photo-7231986.jpeg?auto=compress&cs=tinysrgb&w=400" },
+                { id: 4, name: "宫保鸡丁(英伦版)", description: "微辣香脆，花生与腰果增添口感", price: "14.20", category: "stirfry", img: "https://images.pexels.com/photos/12841474/pexels-photo-12841474.jpeg?auto=compress&cs=tinysrgb&w=400" },
+                { id: 5, name: "水晶虾饺皇", description: "整只鲜虾，薄皮晶莹", price: "7.80", category: "dimsum", img: "https://images.pexels.com/photos/4913474/pexels-photo-4913474.jpeg?auto=compress&cs=tinysrgb&w=400" },
+                { id: 6, name: "黑金流沙包", description: "咸蛋黄流心，招牌点心", price: "6.50", category: "dimsum", img: "https://images.pexels.com/photos/5412163/pexels-photo-5412163.jpeg?auto=compress&cs=tinysrgb&w=400" },
+                { id: 7, name: "英式咖喱牛腩煲", description: "印式香料+中式焖法，配烤饼", price: "16.50", category: "fusion", img: "https://images.pexels.com/photos/2338407/pexels-photo-2338407.jpeg?auto=compress&cs=tinysrgb&w=400" },
+                { id: 8, name: "炸鱼薯条中式风味", description: "鳕鱼天妇罗配椒盐薯条", price: "13.90", category: "fusion", img: "https://images.pexels.com/photos/6999432/pexels-photo-6999432.jpeg?auto=compress&cs=tinysrgb&w=400" }
+            ]
+        };
 
-    // 简单表单交互 (模拟预约反馈，无后端)
-    const bookingBtn = document.getElementById('bookingBtn');
-    const feedback = document.getElementById('formFeedback');
-    if(bookingBtn) {
-        bookingBtn.addEventListener('click', function(e) {
-            const nameInput = document.getElementById('visitorName');
-            const emailInput = document.getElementById('visitorEmail');
-            const name = nameInput ? nameInput.value.trim() : '';
-            const email = emailInput ? emailInput.value.trim() : '';
-            if(!name || !email) {
-                feedback.innerHTML = '✨ 请留下您的称呼与联系方式，管家将为您安排雅集 ✨';
-                feedback.style.color = "#FFEFD6";
+        let currentCategory = "all";
+        const categoriesContainer = document.getElementById("menu-categories");
+        const menuGrid = document.getElementById("menu-grid-container");
+
+        function renderCategories() {
+            categoriesContainer.innerHTML = "";
+            mockMenuData.categories.forEach(cat => {
+                const btn = document.createElement("button");
+                btn.className = `category-btn ${currentCategory === cat.id ? 'active' : ''}`;
+                btn.textContent = cat.name;
+                btn.dataset.cat = cat.id;
+                btn.addEventListener("click", () => {
+                    currentCategory = cat.id;
+                    renderCategories();
+                    renderMenuItems();
+                });
+                categoriesContainer.appendChild(btn);
+            });
+        }
+
+        function renderMenuItems() {
+            let filtered = mockMenuData.items;
+            if(currentCategory !== "all") {
+                filtered = mockMenuData.items.filter(item => item.category === currentCategory);
+            }
+            if(filtered.length === 0) {
+                menuGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center;">暂无可口菜品，请尝试其他分类 🥢</div>`;
                 return;
             }
-            // 模拟提交成功提示
-            feedback.innerHTML = `感谢 ${name}，已收到您的预约意向。我们的雅士顾问将在24小时内与您联系，共赴一楼之约。`;
-            feedback.style.color = "#FCE9CE";
-            // 可清空部分输入体验，但不强制重置
-            if(nameInput) nameInput.value = '';
-            if(emailInput) emailInput.value = '';
-            // 可选重置选择框
-            setTimeout(() => {
-                feedback.innerHTML = '';
-            }, 4000);
-        });
-    }
+            menuGrid.innerHTML = filtered.map(item => `
+                <div class="menu-card">
+                    <img class="menu-img" src="${item.img}" alt="${item.name}" loading="lazy" onerror="this.src='https://picsum.photos/id/30/400/300'">
+                    <div class="menu-info">
+                        <div class="menu-name">${item.name}</div>
+                        <div class="menu-desc">${item.description}</div>
+                        <div class="menu-price"><span class="price-symbol">£</span>${item.price}</div>
+                    </div>
+                </div>
+            `).join("");
+        }
 
-    // 平滑滚动（锚点）
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        menuGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center;"><i class="fas fa-spinner fa-pulse"></i> 从 merchant.onestepeat.co.uk 加载英式菜单...</div>`;
+        setTimeout(() => {
+            renderCategories();
+            renderMenuItems();
+        }, 500);
+    })();
+
+    // 平滑滚动
+    document.querySelectorAll('.nav-links a, .hero-buttons a, .about-text .btn').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
-            const targetId = this.getAttribute('href');
-            if(targetId === "#" || targetId === "") return;
-            const targetElement = document.querySelector(targetId);
-            if(targetElement) {
+            const href = this.getAttribute('href');
+            if (href && href.startsWith('#')) {
                 e.preventDefault();
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+                const target = document.querySelector(href);
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
     });
-
-    // 极简加载效果，让卡片图片动态可访问（图片均来自 picsum 稳定占位，展现官网类似排版）
-    // 使交互更贴合品牌感
-    console.log("阿如一楼官网已加载 — 东方雅境，静候君临");
 </script>
 </body>
 </html>
