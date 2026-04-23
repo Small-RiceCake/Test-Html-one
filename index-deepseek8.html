@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>New China Takeaway | 英式中餐</title>
+    <!-- Google Fonts, Tailwind, Swiper, Font Awesome, Leaflet -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <style>
+        * { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        .gold-text { color: #d4af37; }
+        .bg-gold { background-color: #d4af37; }
+        .border-gold { border-color: #d4af37; }
+        .hover-gold:hover { background-color: #c5a028; transition: all 0.2s; }
+        .card-shadow { box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.02); }
+        .menu-category-header.active { background-color: #991b1b; color: white; }
+        .fade-transition { transition: all 0.2s ease; }
+        .swiper-slide img { transition: transform 0.3s; }
+        .swiper-slide:hover img { transform: scale(1.02); }
+        .filter-chip.active { background-color: #b91c1c; color: white; border-color: #b91c1c; }
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body class="bg-amber-50 text-gray-800">
+
+    <!-- 中英文切换栏 + 导航 -->
+    <div class="fixed top-0 z-30 w-full bg-white/90 backdrop-blur-md shadow-sm border-b border-amber-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-dragon text-red-700 text-2xl"></i>
+                <span class="font-bold text-xl tracking-tight text-red-800">NEW CHINA <span class="gold-text">TAKEAWAY</span></span>
+            </div>
+            <div class="flex items-center gap-4">
+                <button id="langZhBtn" class="px-3 py-1 rounded-full text-sm font-medium transition bg-red-700 text-white">中文</button>
+                <button id="langEnBtn" class="px-3 py-1 rounded-full text-sm font-medium transition bg-gray-200 text-gray-700 hover:bg-gray-300">English</button>
+            </div>
+        </div>
+    </div>
+
+    <main class="pt-16">
+        <!-- HERO 区 背景餐厅图 + 预约按钮 -->
+        <section class="relative bg-cover bg-center bg-no-repeat h-[85vh] flex items-center justify-center" style="background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');">
+            <div class="text-center text-white px-4">
+                <h1 class="text-5xl md:text-7xl font-extrabold tracking-wide drop-shadow-lg" data-i18n-key="hero_title">New China Takeaway</h1>
+                <p class="text-xl md:text-2xl mt-4 max-w-2xl mx-auto font-light" data-i18n-key="hero_sub">Authentic British-Chinese Flavours | 地道英式中餐</p>
+                <a href="#reservation" class="inline-block mt-8 bg-red-700 hover:bg-red-800 text-white font-bold py-3 px-8 rounded-full text-lg transition shadow-lg hover:shadow-xl"><span data-i18n-key="book_table">预约座位</span> →</a>
+            </div>
+        </section>
+
+        <!-- 菜品展示 轮播 (精选菜品双语展示) -->
+        <section class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-red-800" data-i18n-key="featured_title">特色推荐</h2>
+                    <div class="w-24 h-1 bg-gold mx-auto mt-3 rounded-full"></div>
+                    <p class="mt-3 text-gray-600" data-i18n-key="featured_sub">我们的招牌菜，每日新鲜烹制</p>
+                </div>
+                <div class="swiper featuredSwiper overflow-hidden pb-12">
+                    <div class="swiper-wrapper" id="featuredSlider"></div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-prev text-red-700"></div>
+                    <div class="swiper-button-next text-red-700"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 关于品牌 -->
+        <section class="py-16 bg-amber-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold text-red-800" data-i18n-key="about_title">关于 New China</h2>
+                    <div class="w-20 h-1 bg-gold my-4"></div>
+                    <p class="text-gray-700 leading-relaxed" data-i18n-key="about_text1">自成立以来，New China Takeaway 一直致力于将最正宗的英式中餐风味带到英国社区。我们结合传统粤式技艺与本地口味，创造独特的“香酥鸭”、“椒盐大虾”和“招牌咖喱”。</p>
+                    <p class="text-gray-700 leading-relaxed mt-4" data-i18n-key="about_text2">所有菜肴均使用新鲜食材，现点现做。无论是快捷午餐还是家庭盛宴，我们承诺为您带来温暖、丰富又好味的中餐体验。</p>
+                </div>
+                <div class="rounded-xl overflow-hidden shadow-xl">
+                    <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Restaurant interior" class="w-full h-64 object-cover">
+                </div>
+            </div>
+        </section>
+
+        <!-- 菜单展示 (按类别筛选 + 可折叠分组) -->
+        <section class="py-16 bg-white" id="menu-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl md:text-4xl font-bold text-red-800" data-i18n-key="menu_title">精选菜单</h2>
+                    <div class="w-24 h-1 bg-gold mx-auto my-3"></div>
+                    <p class="text-gray-600" data-i18n-key="menu_sub">探索我们的丰富菜品，点击类别展开/折叠，筛选口味</p>
+                </div>
+                <!-- 类别筛选按钮组 -->
+                <div class="flex flex-wrap justify-center gap-2 mb-10" id="categoryFilterContainer"></div>
+                <!-- 菜单动态列表 (分组折叠) -->
+                <div id="menuDynamicContainer" class="space-y-6"></div>
+            </div>
+        </section>
+
+        <!-- 视频展示 -->
+        <section class="py-16 bg-amber-50">
+            <div class="max-w-5xl mx-auto px-4 text-center">
+                <h2 class="text-3xl font-bold text-red-800 mb-4" data-i18n-key="video_title">美食之旅</h2>
+                <div class="w-24 h-1 bg-gold mx-auto mb-8"></div>
+                <div class="relative pb-[56.25%] h-0 rounded-xl overflow-hidden shadow-2xl">
+                    <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/YVhWmS-ByLg?si=GQR8WYYDALP-gfqD" title="British Chinese Takeaway Showcase" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <p class="mt-4 text-gray-600" data-i18n-key="video_caption">体验英式中餐的烟火气与魅力</p>
+            </div>
+        </section>
+
+        <!-- 地图 + 社交链接 -->
+        <section class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-10">
+                <div>
+                    <h3 class="text-2xl font-bold text-red-800 mb-4" data-i18n-key="find_us">找到我们</h3>
+                    <div id="map" class="h-64 rounded-xl shadow-md border border-amber-200 z-10"></div>
+                    <p class="mt-3 text-gray-600" data-i18n-key="address">📍 伦敦·唐人街 | 15 Gerrard St, London W1D 6JE</p>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-red-800 mb-4" data-i18n-key="follow_us">社交连接</h3>
+                    <div class="flex space-x-6 text-4xl text-red-700">
+                        <a href="#" class="hover:text-gold transition"><i class="fab fa-facebook-square"></i></a>
+                        <a href="#" class="hover:text-gold transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="hover:text-gold transition"><i class="fab fa-tripadvisor"></i></a>
+                        <a href="#" class="hover:text-gold transition"><i class="fab fa-twitter"></i></a>
+                    </div>
+                    <div class="mt-8 bg-amber-100 p-6 rounded-xl">
+                        <p class="font-semibold text-gray-800" data-i18n-key="open_hours">营业时间</p>
+                        <p class="text-gray-700">Mon - Sun: 12:00 – 22:30</p>
+                        <p class="text-gray-700 mt-2" data-i18n-key="delivery">外卖 & 堂食 | 自取优惠</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 预约表单 Web3Form -->
+        <section id="reservation" class="py-16 bg-amber-50">
+            <div class="max-w-3xl mx-auto px-4">
+                <div class="text-center mb-6">
+                    <h2 class="text-3xl font-bold text-red-800" data-i18n-key="reserve_title">预约订座</h2>
+                    <div class="w-24 h-1 bg-gold mx-auto my-3"></div>
+                    <p class="text-gray-600" data-i18n-key="reserve_sub">预定您的专属桌位，享受地道美食</p>
+                </div>
+                <form action="https://api.web3forms.com/submit" method="POST" class="bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                    <input type="hidden" name="access_key" value="ba4171ba-fb95-4e10-aab0-7dfb643a81fa">
+                    <input type="hidden" name="subject" value="New Table Reservation">
+                    <input type="hidden" name="redirect" value="https://web3forms.com/success">
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div><label class="block text-gray-700 font-medium mb-1" data-i18n-key="form_name">姓名</label><input type="text" name="name" required class="w-full border border-gray-300 rounded-lg p-2 focus:border-red-500 outline-none"></div>
+                        <div><label class="block text-gray-700 font-medium mb-1" data-i18n-key="form_email">电子邮箱</label><input type="email" name="email" required class="w-full border border-gray-300 rounded-lg p-2 focus:border-red-500"></div>
+                        <div><label class="block text-gray-700 font-medium mb-1" data-i18n-key="form_phone">电话</label><input type="tel" name="phone" class="w-full border border-gray-300 rounded-lg p-2"></div>
+                        <div><label class="block text-gray-700 font-medium mb-1" data-i18n-key="form_date">日期</label><input type="date" name="date" required class="w-full border border-gray-300 rounded-lg p-2"></div>
+                        <div><label class="block text-gray-700 font-medium mb-1" data-i18n-key="form_time">时间</label><input type="time" name="time" required class="w-full border border-gray-300 rounded-lg p-2"></div>
+                        <div><label class="block text-gray-700 font-medium mb-1" data-i18n-key="form_guests">人数</label><input type="number" name="guests" min="1" max="20" class="w-full border border-gray-300 rounded-lg p-2"></div>
+                    </div>
+                    <div class="mt-4"><label class="block text-gray-700 font-medium mb-1" data-i18n-key="form_message">特殊需求</label><textarea name="message" rows="3" class="w-full border border-gray-300 rounded-lg p-2"></textarea></div>
+                    <button type="submit" class="mt-6 w-full bg-red-700 hover:bg-red-800 text-white font-semibold py-3 rounded-full transition">📅 <span data-i18n-key="submit_btn">提交预约</span></button>
+                </form>
+            </div>
+        </section>
+
+        <footer class="bg-red-900 text-white py-8 text-center">
+            <p>© 2025 New China Takeaway – 传统与现代的英式中餐艺术</p>
+        </footer>
+    </main>
+
+    <script>
+        // ----------------------------- 1. 原始菜单数据 (基于表格内容内嵌并解析) -----------------------------
+        const rawTableData = `
+类别 | 中文 | 英文 | 编号 | 价格 | vat | 输出
+椒盐盒,SALT & PEPPER MUNCHY BOX | 椒盐盒 | SALT & PEPPER MUNCHY BOX |  | 18 |  | 
+厨师推介,CHEF SPECIAL | 炸鸡 | Deep Fried Golden Chicken | S1 | 7.9 |  | 
+厨师推介,CHEF SPECIAL | 熏鸡 | Smoked Chicken | S2 | 6.9 |  | 
+厨师推介,CHEF SPECIAL | 蜜汁叉烧 | Roast Pork in Special Honey Sauce | S3 | 7.3 |  | 
+厨师推介,CHEF SPECIAL | 蜜汁骨 | Roast Spare Ribs in Special Honey Sauce | S4 | 7.4 |  | 
+厨师推介,CHEF SPECIAL | 蒜炸鸡翅 | Deep Fried Golden Garlic Chicken Wings (6) | S5 | 7.6 |  | 
+厨师推介,CHEF SPECIAL | 虾米卷 | Rice Paper Wrapped King Prawn | S6 | 8.8 |  | 
+厨师推介,CHEF SPECIAL | 士召青口 | Mussels with Green Pepper in Black Bean Sauce | S7 | 7.9 |  | 
+厨师推介,CHEF SPECIAL | 三鲜丝 | Shredded Three Delicious | S8 | 7.9 |  | 
+厨师推介,CHEF SPECIAL | 椒盐尤鱼 | Salt & Pepper Squids | S9 | 8.1 |  | 
+厨师推介,CHEF SPECIAL | 炸大虾 | Crispy Fried King Prawn | S10 | 6.6 |  | 
+厨师推介,CHEF SPECIAL | 椒盐毛豆 | Salt & Chilli Edamame Beans | S11 | 6.1 |  | 
+点心,DIM SUM | 点心拼 | Steamed Dim Sum | S12 | 6.6 |  | 
+点心,DIM SUM | 虾饺(4) | Prawn Dumplings (Har Gow) (4) | S13 | 6.1 |  | 
+点心,DIM SUM | 烧麦(5) | Pork Siu Mai (5) | S14 | 6.6 |  | 
+点心,DIM SUM | 锅贴(6) | Pan Fried War Tips (Pork) (6) | S15 | 6.9 |  | 
+河粉乌冬,HO FUN DISHES & UDON DISHES | 招牌河粉 | House Special Fried Ho Fun | E1 | 8.6 |  | 
+河粉乌冬,HO FUN DISHES & UDON DISHES | 招牌乌冬 | House Special Fried Udon | E1 | 8.6 |  | 
+河粉乌冬,HO FUN DISHES & UDON DISHES | 海鲜河粉 | Mixed Seafood Fried Ho Fun | E2 | 8.8 |  | 
+河粉乌冬,HO FUN DISHES & UDON DISHES | 鸭河粉 | Roast Duck Fried Ho Fun | E3 | 8.8 |  | 
+河粉乌冬,HO FUN DISHES & UDON DISHES | 鸭乌冬 | Roast Duck Fried Udon | E3 | 8.8 |  | 
+河粉乌冬,HO FUN DISHES & UDON DISHES | 大虾河粉 | King Prawn Fried Ho Fun | E4 | 8.6 |  | 
+河粉乌冬,HO FUN DISHES & UDON DISHES | 大虾乌冬 | King Prawn Fried Udon | E4 | 8.6 |  | 
+河粉乌冬,HO FUN DISHES & UDON DISHES | 牛河粉 | Fried Beef Ho Fun | E5 | 8.2 |  | 
+河粉乌冬,HO FUN DISHES & UDON DISHES | 豉汁牛河粉 | Beef and Black Bean Ho Fun | E6 | 8.8 |  | 
+河粉乌冬,HO FUN DISHES & UDON DISHES | 鸡河粉 | Fried Chicken Ho Fun | E7 | 8.2 |  | 
+河粉乌冬,HO FUN DISHES & UDON DISHES | 杂菜河粉 | Mixed Vegetables Fried Ho Fun | E8 | 7.6 |  | 
+河粉乌冬,HO FUN DISHES & UDON DISHES | 杂菜乌冬 | Mixed Vegetables Fried Udon | E8 | 7.6 |  | 
+照烧类,TERIYAKI DISHES | 招牌照烧 | House Special Teriyaki Style | E9 | 7.9 |  | 
+照烧类,TERIYAKI DISHES | 照烧鸭 | Roast Duck Teriyaki Style | E10 | 8.1 |  | 
+照烧类,TERIYAKI DISHES | 照烧大虾 | King Prawns Teriyaki Style | E11 | 7.9 |  | 
+照烧类,TERIYAKI DISHES | 照烧牛 | Beef Teriyaki Style | E12 | 7.3 |  | 
+照烧类,TERIYAKI DISHES | 照烧鸡 | Chicken Teriyaki Style | E13 | 7.3 |  | 
+英式餐,ENGLISH DISHES | 杂拼 | Combination Mixed Starter | 1 | 12.5 |  | 
+英式餐,ENGLISH DISHES | 香酥鸭 | Crispy Aromatic Duck | 2 | 10.5 |  | 
+英式餐,ENGLISH DISHES | 马鸡 | Chicken Maryland | 3 | 19.5 |  | 
+英式餐,ENGLISH DISHES | 杂扒 | Mixed Grill | 4 | 12.5 |  | 
+英式餐,ENGLISH DISHES | 西冷牛排 | Sirloin Steak | 5 | 12.5 |  | 
+英式餐,ENGLISH DISHES | 猪排 | Pork Chop | 6 | 12.5 |  | 
+英式餐,ENGLISH DISHES | 烤鸡 | Roast Chicken | 7 | 11.5 |  | 
+汤类,SOUP | 酸辣汤 | Hot & Sour Soup | 8 | 4.1 |  | 
+汤类,SOUP | 蟹米汤 | Crab Meat & Sweet Corn Soup | 9 | 3.8 |  | 
+汤类,SOUP | 鸡米汤 | Chicken & Sweet Corn Soup | 10 | 3.8 |  | 
+汤类,SOUP | 鸡面汤 | Chicken & Noodle Soup | 11 | 3.7 |  | 
+汤类,SOUP | 鸡菇汤 | Chicken & Mushroom Soup | 12 | 3.9 |  | 
+汤类,SOUP | 云吞汤(5) | Won Ton Soup (5) | 12A | 4.1 |  | 
+汤类,SOUP | 杂菜汤 | Mixed Vegetable Soup | 12B | 3.4 |  | 
+头盘,APPETISERS | 咖喱角(10) | Curried Samosas (10) | 13 | 4.4 |  | 
+头盘,APPETISERS | 海草 | Crispy Seaweed | 14 | 4.8 |  | 
+头盘,APPETISERS | 虾多士(12) | Sesame Prawn on Toast (12) | 15 | 5.5 |  | 
+头盘,APPETISERS | 泰鱼糕(5) | Thai Style Fish Cake (5) | 16 | 4.9 |  | 
+头盘,APPETISERS | 炸云吞(8) | Crispy Won Ton (8) | 17 | 4.7 |  | 
+头盘,APPETISERS | 春卷(5) | Spring Rolls (5) | 18 | 5.1 |  | 
+头盘,APPETISERS | 小斋卷(8) | Vegetarian Mini Spring Rolls (8) | 19 | 4.4 |  | 
+头盘,APPETISERS | 大卷(2) | Large Pancake Rolls (2) | 20 | 4.9 |  | 
+头盘,APPETISERS | 干骨 | Dry Spare Ribs | 21 | 7.2 |  | 
+头盘,APPETISERS | 带汁骨 | Spare Ribs in Sauce | 22 | 7.2 |  | 
+头盘,APPETISERS | 椒盐骨 | Salt & Pepper Spare Ribs | 23 | 7.2 |  | 
+头盘,APPETISERS | 椒盐大虾 | Salt & Pepper King Prawn | 24 | 7.4 |  | 
+头盘,APPETISERS | 椒盐牛丝 | Salt & Pepper Shredded Beef | 25 | 6.7 |  | 
+头盘,APPETISERS | 椒盐鸡丝 | Salt & Pepper Shredded Chicken | 26 | 6.7 |  | 
+头盘,APPETISERS | 椒盐鸡翅 | Salt & Pepper Chicken Wings | 27 | 6.4 |  | 
+头盘,APPETISERS | 泰甜辣鸡翅 | Thai Style Sweet & Chilli Chicken Wings | 28 | 6.4 |  | 
+头盘,APPETISERS | 洋葱孜然鸡翅 | Chicken Wings with Onions and Cumin | 29 | 6.7 |  | 
+头盘,APPETISERS | 沙爹鸡串(4) | Satay Chicken on Skewers (4) | 30 | 6.4 |  | 
+中式特餐,CHINESE SPECIALITIES | 快乐天堂 | Merry Paradise | 31 | 6.9 |  | 
+中式特餐,CHINESE SPECIALITIES | 游龙 | Wandering Dragon | 32 | 6.9 |  | 
+中式特餐,CHINESE SPECIALITIES | 司机 | Four Seasons | 33 | 6.9 |  | 
+中式特餐,CHINESE SPECIALITIES | 家庭开心餐 | Happy Family Meal | 34 | 6.9 |  | 
+中式特餐,CHINESE SPECIALITIES | 中式鸡 | Chinese Chicken | 35 | 6.4 |  | 
+中式特餐,CHINESE SPECIALITIES | 中式叉烧 | Chinese Roast Pork | 36 | 6.4 |  | 
+中式特餐,CHINESE SPECIALITIES | 招牌沙爹 | House Special Satay | 37 | 6.9 |  | 
+中式特餐,CHINESE SPECIALITIES | 招牌芙蓉 | House Special Foo Yung | 38 | 6.9 |  | 
+中式特餐,CHINESE SPECIALITIES | 招牌什水 | House Special Chop Suey | 39 | 6.9 |  | 
+中式特餐,CHINESE SPECIALITIES | 招牌泰甜辣 | House Special in Thai Sweet & Chilli Sauce | 40 | 6.9 |  | 
+中式特餐,CHINESE SPECIALITIES | 招牌酱爆 | House Special with Cashew Nuts in Yellow Bean Sauce | 41 | 6.9 |  | 
+中式特餐,CHINESE SPECIALITIES | 招牌宫保 | House Special in Kung Po Sauce | 42 | 6.9 |  | 
+中式特餐,CHINESE SPECIALITIES | 招牌四川 | House Special in Szechuan Sauce | 43 | 6.9 |  | 
+中式特餐,CHINESE SPECIALITIES | 招牌毛菇 | House Special with Mushrooms | 44 | 6.9 |  | 
+中式特餐,CHINESE SPECIALITIES | 招牌番茄 | House Special with Tomatoes | 45 | 6.9 |  | 
+中式特餐,CHINESE SPECIALITIES | 招牌腰果 | House Special Cashew Nuts | 46 | 6.9 |  | 
+中式特餐,CHINESE SPECIALITIES | 招牌菠萝 | House Special with Pineapple | 47 | 6.9 |  | 
+中式特餐,CHINESE SPECIALITIES | 招牌士召 | House Special with Green Pepper in Black Bean Sauce | 48 | 6.9 |  | 
+中式特餐,CHINESE SPECIALITIES | 招牌豉菇 | House Special with Mushrooms in Black Bean Sauce | 49 | 6.9 |  | 
+中式特餐,CHINESE SPECIALITIES | 招牌黑椒 | House Special with Black Pepper | 50 | 6.9 |  | 
+中式特餐,CHINESE SPECIALITIES | 招牌姜葱 | House Special with Ginger & Spring Onions | 51 | 6.9 |  | 
+酸甜类,SWEET & SOUR DISHES | 招牌杂球(8)(分汁) | House Special Mixed Balls (8)(Sparated Sauce) | 52 | 7.1 |  | 
+酸甜类,SWEET & SOUR DISHES | 虾球(8)(分汁) | King Prawn Balls (8)(Sparated Sauce) | 53 | 7.4 |  | 
+酸甜类,SWEET & SOUR DISHES | 鸡球(8)(分汁) | Chicken Balls (8)(Sparated Sauce) | 54 | 6.4 |  | 
+酸甜类,SWEET & SOUR DISHES | 猪球(8)(分汁) | Pork Balls (8)(Sparated Sauce) | 55 | 6.4 |  | 
+酸甜类,SWEET & SOUR DISHES | 招牌香古 | House Special Hong Kong Style | 56 | 7.1 |  | 
+酸甜类,SWEET & SOUR DISHES | 香古大虾 | King Prawn Hong Kong Style | 57 | 7.4 |  | 
+酸甜类,SWEET & SOUR DISHES | 香古鸡 | Chicken Hong Kong Style | 58 | 6.4 |  | 
+酸甜类,SWEET & SOUR DISHES | 香古猪 | Pork Hong Kong Style | 59 | 6.4 |  | 
+咖喱类,CURRY DISHES | 招牌咖喱 | House Special Curry | 60 | 6.9 |  | 
+咖喱类,CURRY DISHES | 咖喱大虾 | King Prawn Curry | 61 | 7.4 |  | 
+咖喱类,CURRY DISHES | 咖喱鸡 | Chicken Curry | 62 | 6.4 |  | 
+咖喱类,CURRY DISHES | 咖喱叉烧 | Roast Pork Curry | 63 | 6.4 |  | 
+咖喱类,CURRY DISHES | 咖喱牛 | Beef Curry | 64 | 6.4 |  | 
+咖喱类,CURRY DISHES | 咖喱毛菇 | Mushroom Curry | 65 | 5.9 |  | 
+咖喱类,CURRY DISHES | 咖喱杂菜 | Mixed Vegetable Curry | 66 | 5.9 |  | 
+咖喱类,CURRY DISHES | 咖喱虾仔 | Shrimp Curry | 67 | 7.7 |  | 
+咖喱类,CURRY DISHES | 咖喱鸭 | Roast Duck Curry | 68 | 7.9 |  | 
+咖喱类,CURRY DISHES | 泰红咖喱大虾 | Thai Red King Prawn Curry | 69 | 7.7 |  | 
+咖喱类,CURRY DISHES | 泰绿咖喱大虾 | Thai Green King Prawn Curry | 69 | 6.7 |  | 
+咖喱类,CURRY DISHES | 泰红咖喱鸡 | Thai Red Chicken Curry | 70 | 6.7 |  | 
+咖喱类,CURRY DISHES | 泰绿咖喱鸡 | Thai Green Chicken Curry | 70 | 6.7 |  | 
+咖喱类,CURRY DISHES | 泰红咖喱牛 | Thai Red Beef Curry | 71 | 6.7 |  | 
+咖喱类,CURRY DISHES | 泰绿咖喱牛 | Thai Green Beef Curry | 71 | 6.7 |  | 
+咖喱类,CURRY DISHES | 泰红咖喱猪 | Thai Red Pork Curry | 72 | 6.7 |  | 
+咖喱类,CURRY DISHES | 泰绿咖喱猪 | Thai Green Pork Curry | 72 | 6.7 |  | 
+咖喱类,CURRY DISHES | 泰红咖喱鸭 | Thai Red Duck Curry | 73 | 7.9 |  | 
+咖喱类,CURRY DISHES | 泰绿咖喱鸭 | Thai Green Duck Curry | 73 | 7.9 |  | 
+鸡肉类,CHICKEN DISHES | 沙爹鸡 | Chicken Satay | 74 | 6.4 |  | 
+鸡肉类,CHICKEN DISHES | 芙蓉鸡 | Chicken Foo Yung | 75 | 6.4 |  | 
+鸡肉类,CHICKEN DISHES | 什水鸡 | Chicken Chop Suey | 76 | 6.4 |  | 
+鸡肉类,CHICKEN DISHES | 泰甜辣鸡 | Chicken in Thai Sweet & Chilli Sauce | 77 | 6.7 |  | 
+鸡肉类,CHICKEN DISHES | 士召鸡 | Chicken with Green Pepper in Black Bean Sauce | 78 | 6.4 |  | 
+鸡肉类,CHICKEN DISHES | 豉菇鸡 | Chicken with Mushrooms in Black Bean Sauce | 79 | 6.4 |  | 
+鸡肉类,CHICKEN DISHES | 酱爆鸡 | Chicken with Cashew Nuts in Yellow Bean Sauce | 80 | 6.7 |  | 
+鸡肉类,CHICKEN DISHES | 京鸡 | Chicken with Onion in Peking Sauce | 81 | 6.4 |  | 
+鸡肉类,CHICKEN DISHES | 宫保鸡 | Chicken with Cashew Nuts in Kung Po Sauce | 82 | 6.7 |  | 
+鸡肉类,CHICKEN DISHES | 四川鸡 | Chicken in Szechuan Sauce | 83 | 6.4 |  | 
+鸡肉类,CHICKEN DISHES | 蚝汁鸡 | Chicken in Oyster Sauce | 84 | 6.4 |  | 
+鸡肉类,CHICKEN DISHES | 柠檬鸡 | Crispy Chicken in Lemon Sauce | 85 | 6.7 |  | 
+鸡肉类,CHICKEN DISHES | 橙鸡 | Crispy Chicken in Orange Sauce | 86 | 6.7 |  | 
+鸡肉类,CHICKEN DISHES | 甜辣鸡丝 | Crispy Shredded Chicken in Sweet Chilli Sauce | 87 | 6.7 |  | 
+鸡肉类,CHICKEN DISHES | 腰果鸡 | Chicken with Cashew Nuts | 88 | 6.7 |  | 
+鸡肉类,CHICKEN DISHES | 番茄鸡 | Chicken with Tomatoes | 89 | 6.4 |  | 
+鸡肉类,CHICKEN DISHES | 毛菇鸡 | Chicken with Mushrooms | 90 | 6.4 |  | 
+鸡肉类,CHICKEN DISHES | 芽菜鸡 | Chicken with Bean Sprouts | 91 | 6.4 |  | 
+鸡肉类,CHICKEN DISHES | 姜葱鸡 | Chicken with Ginger & Spring Onions | 92 | 6.4 |  | 
+鸡肉类,CHICKEN DISHES | 菠萝鸡 | Chicken with Pineapple | 93 | 6.4 |  | 
+鸡肉类,CHICKEN DISHES | 竹马鸡 | Chicken with Bamboo Shoots & Water Chestnuts | 94 | 6.4 |  | 
+鸡肉类,CHICKEN DISHES | 黑椒鸡 | Chicken with Black Pepper | 95 | 6.4 |  | 
+牛肉类,BEEF DISHES | 沙爹牛 | Beef Satay | 96 | 6.4 |  | 
+牛肉类,BEEF DISHES | 芙蓉牛 | Beef Foo Yung | 97 | 6.4 |  | 
+牛肉类,BEEF DISHES | 什水牛 | Beef Chop Suey | 98 | 6.4 |  | 
+牛肉类,BEEF DISHES | 泰甜辣牛 | Beef in Thai Sweet & Chilli Sauce | 99 | 6.7 |  | 
+牛肉类,BEEF DISHES | 士召牛 | Beef with Green Pepper in Black Bean Sauce | 100 | 6.4 |  | 
+牛肉类,BEEF DISHES | 豉菇牛 | Beef with Mushrooms in Black Bean Sauce | 101 | 6.4 |  | 
+牛肉类,BEEF DISHES | 酱爆牛 | Beef with Cashew Nuts in Yellow Bean Sauce | 102 | 6.7 |  | 
+牛肉类,BEEF DISHES | 京牛 | Beef with Onion in Peking Sauce | 103 | 6.4 |  | 
+牛肉类,BEEF DISHES | 蚝汁牛 | Beef with Onion in Oyster Sauce | 104 | 6.4 |  | 
+牛肉类,BEEF DISHES | 宫保牛 | Beef with Cashew Nuts in Kung Po Sauce | 105 | 6.7 |  | 
+牛肉类,BEEF DISHES | 四川牛 | Beef in Szechuan Sauce | 106 | 6.4 |  | 
+牛肉类,BEEF DISHES | 甜辣牛丝 | Crispy Shredded Beef in Sweet Chilli Sauce | 107 | 6.7 |  | 
+牛肉类,BEEF DISHES | 番茄牛 | Beef with Tomatoes | 108 | 6.4 |  | 
+牛肉类,BEEF DISHES | 毛菇牛 | Beef with Mushrooms | 109 | 6.4 |  | 
+牛肉类,BEEF DISHES | 姜葱牛 | Beef with Ginger & Spring Onions | 110 | 6.4 |  | 
+牛肉类,BEEF DISHES | 腰果牛 | Beef with Cashew Nuts | 111 | 6.7 |  | 
+牛肉类,BEEF DISHES | 竹马牛 | Beef with Bamboo Shoots & Water Chestnuts | 112 | 6.4 |  | 
+牛肉类,BEEF DISHES | 黑椒牛 | Beef with Black Pepper | 113 | 6.4 |  | 
+猪肉类,ROAST PORK DISHES | 沙爹叉烧 | Roast Pork Satay | 114 | 6.4 |  | 
+猪肉类,ROAST PORK DISHES | 芙蓉叉烧 | Roast Pork Foo Yung | 115 | 6.4 |  | 
+猪肉类,ROAST PORK DISHES | 什水叉烧 | Roast Pork Chop Suey | 116 | 6.4 |  | 
+猪肉类,ROAST PORK DISHES | 泰甜辣叉烧 | Roast Pork in Thai Sweet & Chilli Sauce | 117 | 6.7 |  | 
+猪肉类,ROAST PORK DISHES | 士召叉烧 | Roast Pork with Green Pepper in Black Bean Sauce | 118 | 6.4 |  | 
+猪肉类,ROAST PORK DISHES | 豉菇叉烧 | Roast Pork with Mushrooms in Black Bean Sauce | 119 | 6.4 |  | 
+猪肉类,ROAST PORK DISHES | 酱爆叉烧 | Roast Pork with Cashew Nuts in Yellow Bean Sauce | 120 | 6.7 |  | 
+猪肉类,ROAST PORK DISHES | 京叉烧 | Roast Pork with Onion in Peking Sauce | 121 | 6.4 |  | 
+猪肉类,ROAST PORK DISHES | 蚝汁叉烧 | Roast Pork with Onion in Oyster Sauce | 122 | 6.4 |  | 
+猪肉类,ROAST PORK DISHES | 宫保叉烧 | Roast Pork with Cashew Nuts in Kung Po Sauce | 123 | 6.7 |  | 
+猪肉类,ROAST PORK DISHES | 四川叉烧 | Roast Pork in Szechuan Sauce | 124 | 6.4 |  | 
+猪肉类,ROAST PORK DISHES | 毛菇叉烧 | Roast Pork with Mushrooms | 125 | 6.4 |  | 
+猪肉类,ROAST PORK DISHES | 姜葱叉烧 | Roast Pork with Ginger & Spring Onions | 126 | 6.4 |  | 
+猪肉类,ROAST PORK DISHES | 腰果叉烧 | Roast Pork with Cashew Nuts | 127 | 6.7 |  | 
+猪肉类,ROAST PORK DISHES | 竹马叉烧 | Roast Pork with Bamboo Shoots & Water Chestnuts | 128 | 6.4 |  | 
+猪肉类,ROAST PORK DISHES | 黑椒叉烧 | Roast Pork with Black Pepper | 129 | 6.4 |  | 
+大虾类,KING PRAWN DISHES | 沙爹大虾 | King Prawn Satay | 130 | 7.4 |  | 
+大虾类,KING PRAWN DISHES | 芙蓉大虾 | King Prawn Foo Yung | 131 | 7.4 |  | 
+大虾类,KING PRAWN DISHES | 什水大虾 | King Prawn Chop Suey | 132 | 7.4 |  | 
+大虾类,KING PRAWN DISHES | 泰甜辣大虾 | King Prawn in Thai Sweet & Chilli Sauce | 133 | 7.7 |  | 
+大虾类,KING PRAWN DISHES | 士召大虾 | King Prawn with Green Pepper in Black Bean Sauce | 134 | 7.4 |  | 
+大虾类,KING PRAWN DISHES | 豉菇大虾 | King Prawn with Mushroom in Black Bean Sauce | 135 | 7.4 |  | 
+大虾类,KING PRAWN DISHES | 酱爆大虾 | King Prawn with Cashew Nuts in Yellow Bean Sauce | 136 | 7.7 |  | 
+大虾类,KING PRAWN DISHES | 京大虾 | King Prawn with Onion in Peking Sauce | 137 | 7.4 |  | 
+大虾类,KING PRAWN DISHES | 蚝汁大虾 | King Prawn with Onion in Oyster Sauce | 138 | 7.4 |  | 
+大虾类,KING PRAWN DISHES | 宫保大虾 | King Prawn with Cashew Nuts in Kung Po Sauce | 139 | 7.7 |  | 
+大虾类,KING PRAWN DISHES | 四川大虾 | King Prawn in Szechuan Sauce | 140 | 7.4 |  | 
+大虾类,KING PRAWN DISHES | 毛菇大虾 | King Prawn with Mushrooms | 141 | 7.4 |  | 
+大虾类,KING PRAWN DISHES | 番茄大虾 | King Prawn with Tomatoes | 142 | 7.4 |  | 
+大虾类,KING PRAWN DISHES | 芽菜大虾 | King Prawn with Bean Sprouts | 143 | 7.4 |  | 
+大虾类,KING PRAWN DISHES | 姜葱大虾 | King Prawn with Ginger & Spring Onions | 144 | 7.4 |  | 
+大虾类,KING PRAWN DISHES | 菠萝大虾 | King Prawn with Pineapple | 145 | 7.4 |  | 
+大虾类,KING PRAWN DISHES | 腰果大虾 | King Prawn with Cashew Nuts | 146 | 7.7 |  | 
+大虾类,KING PRAWN DISHES | 竹马大虾 | King Prawn with Bamboo Shoots & Water Chestnuts | 147 | 7.4 |  | 
+大虾类,KING PRAWN DISHES | 黑椒大虾 | King Prawn with Black Pepper | 148 | 7.4 |  | 
+大虾类,KING PRAWN DISHES | 蚝汁菜大虾 | King Prawn with Vegetables in Oyster Sauce | 148A | 7.4 |  | 
+鸭类,DUCK DISHES | 梅汁鸭 | Duck with Plum Sauce | 149 | 7.9 |  | 
+鸭类,DUCK DISHES | 橙鸭 | Duck with Orange Sauce | 150 | 7.9 |  | 
+鸭类,DUCK DISHES | 柠檬鸭 | Duck with Lemon Sauce | 151 | 7.9 |  | 
+鸭类,DUCK DISHES | 菠萝鸭 | Duck with Pineapple | 152 | 7.9 |  | 
+鸭类,DUCK DISHES | 姜葱鸭 | Duck with Ginger & Spring Onions | 153 | 7.9 |  | 
+鸭类,DUCK DISHES | 士召鸭 | Duck with Green Pepper in Black Bean Sauce | 154 | 7.9 |  | 
+鸭类,DUCK DISHES | 毛菇鸭 | Duck with Mushrooms | 155 | 7.9 |  | 
+鸭类,DUCK DISHES | 蚝汁鸭 | Duck in Oyster Sauce | 155A | 7.9 |  | 
+鸭类,DUCK DISHES | 海鲜鸭 | Duck with Hoi Sin Sauce | 156 | 7.9 |  | 
+鸭类,DUCK DISHES | 杂菜鸭 | Duck with Mixed Vegetables | 156A | 7.9 |  | 
+菜类,VEGETABLE & BEAN CURD DISHES | 炒芽菜 | Stir Fried Bean Sprouts | 157 | 5.7 |  | 
+菜类,VEGETABLE & BEAN CURD DISHES | 炒洋葱 | Stir Fried Onions | 158 | 5.7 |  | 
+菜类,VEGETABLE & BEAN CURD DISHES | 炒毛菇 | Stir Fried Mushrooms | 159 | 5.7 |  | 
+菜类,VEGETABLE & BEAN CURD DISHES | 蒜汁毛菇 | Mushrooms in Garlic Sauce | 160 | 5.7 |  | 
+菜类,VEGETABLE & BEAN CURD DISHES | 竹马 | Bamboo Shoots & Water Chestnuts | 161 | 5.7 |  | 
+菜类,VEGETABLE & BEAN CURD DISHES | 罗汉斋 | Vegetable Delight | 162 | 5.7 |  | 
+菜类,VEGETABLE & BEAN CURD DISHES | 带汁炒杂菜 | Stir Fried Mixed Vegetables in Sauce | 163 | 5.7 |  | 
+菜类,VEGETABLE & BEAN CURD DISHES | 带汁杂菜豆腐 | Bean Curd with Mixed Vegetables in Sauce | 164 | 5.9 |  | 
+菜类,VEGETABLE & BEAN CURD DISHES | 芙蓉毛菇 | Mushroom Foo Yung | 165 | 5.9 |  | 
+菜类,VEGETABLE & BEAN CURD DISHES | 什水毛菇 | Mushroom Chop Suey | 165A | 5.7 |  | 
+饭类,RICE DISHES | 招牌炒饭 | House Special Fried Rice | 166 | 6.9 |  | 
+饭类,RICE DISHES | 扬州炒饭 | Young Chow Fried Rice | 167 | 6.9 |  | 
+饭类,RICE DISHES | 星炒饭 | Singapore Fried Rice | 168 | 6.9 |  | 
+饭类,RICE DISHES | 泰炒饭 | Thai Style Fried Rice | 169 | 6.9 |  | 
+饭类,RICE DISHES | 鸡炒饭 | Chicken Fried Rice | 170 | 6.4 |  | 
+饭类,RICE DISHES | 牛炒饭 | Beef Fried Rice | 171 | 6.4 |  | 
+饭类,RICE DISHES | 叉烧炒饭 | Roast Pork Fried Rice | 172 | 6.4 |  | 
+饭类,RICE DISHES | 大虾炒饭 | King Prawn Fried Rice | 173 | 7.7 |  | 
+饭类,RICE DISHES | 鸭炒饭 | Duck Fried Rice | 174 | 7.9 |  | 
+饭类,RICE DISHES | 虾仔炒饭 | Shrimp Fried Rice | 175 | 7.7 |  | 
+饭类,RICE DISHES | 毛菇炒饭 | Mushroom Fried Rice | 176 | 6.2 |  | 
+饭类,RICE DISHES | 杂菜炒饭 | Mixed Vegetables Fried Rice | 177 | 6.2 |  | 
+饭类,RICE DISHES | 大蛋饭 | Egg Fried Rice(L) | 178 | 4.7 |  | 
+饭类,RICE DISHES | 小蛋饭 | Egg Fried Rice(S) | 178A | 4.3 |  | 
+饭类,RICE DISHES | 大白饭 | Boiled Rice(L) | 179 | 4.1 |  | 
+饭类,RICE DISHES | 小白饭 | Boiled Rice(S) | 179A | 3.7 |  | 
+面类,CHOW MEIN DISHES | 招牌炒面 | House Special Chow Mein | 180 | 6.9 |  | 
+面类,CHOW MEIN DISHES | 星炒面 | Singapore Chow Mein | 181 | 6.9 |  | 
+面类,CHOW MEIN DISHES | 鸡炒面 | Chicken Chow Mein | 182 | 6.5 |  | 
+面类,CHOW MEIN DISHES | 牛炒面 | Beef Chow Mein | 183 | 6.5 |  | 
+面类,CHOW MEIN DISHES | 叉烧炒面 | Roast Pork Chow Mein | 184 | 6.5 |  | 
+面类,CHOW MEIN DISHES | 大虾炒面 | King Prawn Chow Mein | 185 | 7.7 |  | 
+面类,CHOW MEIN DISHES | 鸭炒面 | Duck Chow Mein | 186 | 7.9 |  | 
+面类,CHOW MEIN DISHES | 虾仔炒面 | Shrimp Chow Mein | 187 | 7.7 |  | 
+面类,CHOW MEIN DISHES | 毛菇炒面 | Mushroom Chow Mein | 188 | 6.2 |  | 
+面类,CHOW MEIN DISHES | 杂菜炒面 | Mixed Vegetables Chow Mein | 189 | 6.2 |  | 
+面类,CHOW MEIN DISHES | 星米粉 | Singapore Rice Noodles | 190 | 7.1 |  | 
+面类,CHOW MEIN DISHES | 鸡米粉 | Chicken Rice Noodles | 191 | 6.7 |  | 
+面类,CHOW MEIN DISHES | 叉烧米粉 | Roast Pork Rice Noodles | 192 | 6.7 |  | 
+面类,CHOW MEIN DISHES | 大虾米粉 | King Prawn Rice Noodles | 193 | 7.7 |  | 
+面类,CHOW MEIN DISHES | 大炒面 | Chow Mein(L) | 194 | 5.3 |  | 
+面类,CHOW MEIN DISHES | 小炒面 | Chow Mein(S) | 194A | 4.8 |  | 
+芙蓉类,OMELETTE DISHES | 招牌力 | House Special Omelette | 195 | 7.7 |  | 
+芙蓉类,OMELETTE DISHES | 鸡力 | Chicken Omelette | 196 | 7.4 |  | 
+芙蓉类,OMELETTE DISHES | 牛力 | Beef Omelette | 197 | 7.4 |  | 
+芙蓉类,OMELETTE DISHES | 叉烧力 | Roast Pork Omelette | 198 | 7.4 |  | 
+芙蓉类,OMELETTE DISHES | 大虾力 | King Prawn Omelette | 199 | 7.7 |  | 
+芙蓉类,OMELETTE DISHES | 虾仔力 | Shrimp Omelette | 200 | 7.9 |  | 
+芙蓉类,OMELETTE DISHES | 芙蓉虾仔 | Shrimp Foo Yung | 200A | 6.9 |  | 
+芙蓉类,OMELETTE DISHES | 毛菇力 | Mushroom Omelette | 201 | 7.1 |  | 
+芙蓉类,OMELETTE DISHES | 净力 | Plain Omelette | 202 | 6.9 |  | 
+芙蓉类,OMELETTE DISHES | 净芙蓉 | Plain Foo Yung | 202A | 5.9 |  | 
+其他,EXTRA PORTIONS | 虾片 | Prawn Crackers | 203 | 3.6 |  | 
+其他,EXTRA PORTIONS | 条 | Chips | 204 | 2.8 |  | 
+其他,EXTRA PORTIONS | 椒盐条 | Salt & Pepper Chips | 205 | 4.1 |  | 
+其他,EXTRA PORTIONS | 一份汁 | A Tub of Sauce | 206 | 2.7 |  | 
+其他,EXTRA PORTIONS | 带汁条 | Chips in Sauce | 207 | 3.7 |  | 
+其他,EXTRA PORTIONS | 带汁炒饭和条 | Fried Rice & Chips in Sauce | 208 | 6.9 |  | 
+其他,EXTRA PORTIONS | 带汁炒面和条 | Chow Mein & Chips in Sauce | 208A | 6.9 |  | 
+其他,EXTRA PORTIONS | 带汁毛菇和条 | Fried Mushroom & Chips in Sauce | 209 | 6.9 |  | 
+其他,EXTRA PORTIONS | 带汁炒饭和鸡球(3) | Fried Rice & Chicken Balls (3) in Sauce | 210 | 6.9 |  | 
+其他,EXTRA PORTIONS | 带汁炒面和鸡球(3) | Chow Mein & Chicken Balls (3) in Sauce | 211 | 6.9 |  | 
+其他,EXTRA PORTIONS | 带汁条和鸡球(3) | Chips & Chicken Balls (3) in Sauce | 211A | 6.9 |  | 
+其他,EXTRA PORTIONS | 洋葱圈 | Onion Rings | 212 | 3.7 |  | 
+其他,EXTRA PORTIONS | 炸蕉 | Banana Fritters in Syrup | 213 | 4.1 |  | 
+其他,EXTRA PORTIONS | 炸菠萝 | Pineapple Fritters in Syrup | 213 | 4.1 |  | 
+其他,EXTRA PORTIONS | 香肠(4)和条 | Sausage (4) & Chips | 214 | 5.9 |  | 
+其他,EXTRA PORTIONS | 鸡块(8) | Chicken Nuggets (8) | 215 | 6.2 |  | 
+饮料,DRINK | 瓶装百事 | Pepsi (2L Bottle) | 216 | 4.1 |  | 
+饮料,DRINK | 瓶装减肥百事 | Diet Pepsi (2L Bottle) | 217 | 4.1 |  | 
+饮料,DRINK | 罐装百事 | Pepsi (330ml Can) | 218 | 1.8 |  | 
+饮料,DRINK | 罐装减肥百事 | Diet Pepsi (330ml Can) | 219 | 1.8 |  | 
+饮料,DRINK | 罐装橙坦格 | Orange Tango (330ml Can) | 220 | 1.8 |  | 
+`;
+
+        function parseMenuData() {
+            const lines = rawTableData.trim().split('\n').slice(2);
+            const items = [];
+            for (let line of lines) {
+                if (!line.trim()) continue;
+                const parts = line.split('|').map(p => p.trim());
+                if (parts.length < 5) continue;
+                let rawCat = parts[0] || '';
+                let chnName = parts[1] || '';
+                let engName = parts[2] || '';
+                let code = parts[3] || '';
+                let price = parseFloat(parts[4]) || 0;
+                let categoryChn = rawCat.split(',')[0] || rawCat;
+                let categoryEng = rawCat.includes(',') ? rawCat.split(',')[1] : rawCat;
+                items.push({ categoryChn, categoryEng, chnName, engName, code, price });
+            }
+            return items;
+        }
+
+        let menuItems = parseMenuData();
+        let currentLang = 'zh';
+        let activeCategoryFilter = 'all';
+        let categoryCollapseState = {};
+
+        function getCategoryNames() {
+            const catMap = new Map();
+            menuItems.forEach(item => {
+                const key = currentLang === 'zh' ? item.categoryChn : item.categoryEng;
+                const rawKey = item.categoryChn;
+                if (!catMap.has(rawKey)) catMap.set(rawKey, { zh: item.categoryChn, en: item.categoryEng });
+            });
+            return Array.from(catMap.entries()).map(([raw, {zh,en}]) => ({ raw, display: currentLang === 'zh' ? zh : en }));
+        }
+
+        function renderMenu() {
+            const container = document.getElementById('menuDynamicContainer');
+            if (!container) return;
+            const categoriesMap = new Map();
+            menuItems.forEach(item => {
+                const catRaw = item.categoryChn;
+                if (!categoriesMap.has(catRaw)) categoriesMap.set(catRaw, []);
+                categoriesMap.get(catRaw).push(item);
+            });
+            let categoriesArray = Array.from(categoriesMap.entries());
+            if (activeCategoryFilter !== 'all') {
+                categoriesArray = categoriesArray.filter(([raw]) => raw === activeCategoryFilter);
+            }
+            if (categoriesArray.length === 0) { container.innerHTML = '<div class="text-center py-10">暂无菜品</div>'; return; }
+            let html = '';
+            for (let [catRaw, items] of categoriesArray) {
+                const catDisplay = currentLang === 'zh' ? items[0].categoryChn : items[0].categoryEng;
+                const isCollapsed = categoryCollapseState[catRaw] || false;
+                html += `<div class="border border-amber-200 rounded-xl overflow-hidden bg-white shadow-sm">
+                    <div class="menu-category-header bg-amber-100 px-5 py-3 flex justify-between items-center cursor-pointer hover:bg-amber-200 transition" data-cat="${catRaw}">
+                        <h3 class="text-xl font-bold text-red-800">${escapeHtml(catDisplay)}</h3>
+                        <i class="fas ${isCollapsed ? 'fa-chevron-down' : 'fa-chevron-up'} text-red-700"></i>
+                    </div>
+                    <div class="menu-items-grid p-4 ${isCollapsed ? 'hidden' : ''}" data-catbody="${catRaw}">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">`;
+                items.forEach(dish => {
+                    const dishName = currentLang === 'zh' ? dish.chnName : dish.engName;
+                    html += `<div class="flex justify-between items-center border-b border-gray-100 pb-2">
+                        <div><span class="font-medium">${escapeHtml(dishName)}</span> <span class="text-xs text-gray-400">#${dish.code}</span></div>
+                        <span class="text-red-700 font-bold">£${dish.price.toFixed(2)}</span>
+                    </div>`;
+                });
+                html += `</div></div></div>`;
+            }
+            container.innerHTML = html;
+            document.querySelectorAll('.menu-category-header').forEach(header => {
+                header.addEventListener('click', (e) => {
+                    const cat = header.dataset.cat;
+                    if (cat) { categoryCollapseState[cat] = !categoryCollapseState[cat]; renderMenu(); renderCategoryFilters(); }
+                });
+            });
+        }
+
+        function renderCategoryFilters() {
+            const catsSet = new Set(menuItems.map(i => i.categoryChn));
+            const container = document.getElementById('categoryFilterContainer');
+            if (!container) return;
+            let btns = `<button class="filter-chip px-4 py-1 rounded-full border ${activeCategoryFilter === 'all' ? 'active bg-red-700 text-white' : 'bg-white text-gray-700 border-amber-300'} transition" data-filter="all">${currentLang === 'zh' ? '全部' : 'All'}</button>`;
+            for (let raw of catsSet) {
+                const display = currentLang === 'zh' ? raw : (menuItems.find(i=>i.categoryChn===raw)?.categoryEng || raw);
+                btns += `<button class="filter-chip px-4 py-1 rounded-full border ${activeCategoryFilter === raw ? 'active bg-red-700 text-white' : 'bg-white text-gray-700 border-amber-300'} transition" data-filter="${raw}">${escapeHtml(display)}</button>`;
+            }
+            container.innerHTML = btns;
+            document.querySelectorAll('.filter-chip').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    activeCategoryFilter = btn.dataset.filter;
+                    renderCategoryFilters();
+                    renderMenu();
+                });
+            });
+        }
+
+        function escapeHtml(str) { return String(str).replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+
+        function updateLanguage() {
+            document.querySelectorAll('[data-i18n-key]').forEach(el => {
+                const key = el.dataset.i18nKey;
+                const text = translations[currentLang]?.[key] || key;
+                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.placeholder = text;
+                else el.innerText = text;
+            });
+            renderCategoryFilters();
+            renderMenu();
+            renderFeaturedSlider();
+        }
+
+        const translations = {
+            zh: { hero_title: "New China Takeaway", hero_sub: "地道英式中餐｜经典风味", book_table: "预约座位", featured_title: "特色推荐", featured_sub: "招牌美馔，每日新鲜呈现", about_title: "关于 New China", about_text1: "自成立以来，New China Takeaway 一直致力于将最正宗的英式中餐风味带到英国社区。我们结合传统粤式技艺与本地口味，创造独特的“香酥鸭”、“椒盐大虾”和“招牌咖喱”。", about_text2: "所有菜肴均使用新鲜食材，现点现做。无论是快捷午餐还是家庭盛宴，我们承诺为您带来温暖、丰富又好味的中餐体验。", menu_title: "精选菜单", menu_sub: "探索我们的丰富菜品，点击类别展开/折叠，筛选口味", video_title: "美食之旅", video_caption: "体验英式中餐的烟火气与魅力", find_us: "找到我们", follow_us: "社交连接", open_hours: "营业时间", delivery: "外卖 & 堂食 | 自取优惠", reserve_title: "预约订座", reserve_sub: "预定您的专属桌位，享受地道美食", form_name: "姓名", form_email: "电子邮箱", form_phone: "电话", form_date: "日期", form_time: "时间", form_guests: "人数", form_message: "特殊需求", submit_btn: "提交预约" },
+            en: { hero_title: "New China Takeaway", hero_sub: "Authentic British-Chinese Cuisine", book_table: "Book a Table", featured_title: "Signature Dishes", featured_sub: "Daily fresh, bold flavours", about_title: "About New China", about_text1: "New China Takeaway brings authentic British-Chinese flavours to the UK. We blend traditional Cantonese techniques with local tastes, creating unique dishes like Crispy Aromatic Duck, Salt & Pepper Prawns, and House Special Curry.", about_text2: "All dishes are made fresh to order. Whether for a quick lunch or family feast, we deliver warm, rich and delicious food.", menu_title: "Our Menu", menu_sub: "Browse categories, click to expand/fold, filter by taste", video_title: "Culinary Journey", video_caption: "Experience the sizzle of British-Chinese takeaway", find_us: "Find Us", follow_us: "Follow Us", open_hours: "Opening Hours", delivery: "Takeaway & Dine-in | Collection deals", reserve_title: "Reserve a Table", reserve_sub: "Book your table and enjoy authentic flavours", form_name: "Name", form_email: "Email", form_phone: "Phone", form_date: "Date", form_time: "Time", form_guests: "Guests", form_message: "Special Requests", submit_btn: "Submit Reservation" }
+        };
+
+        let featuredSwiper;
+        function renderFeaturedSlider() {
+            const sample = menuItems.slice(0, 9);
+            const html = sample.map(item => `<div class="swiper-slide text-center bg-white p-4 rounded-2xl shadow-md">
+                <div class="w-full h-48 bg-amber-100 rounded-xl flex items-center justify-center"><i class="fas fa-utensils text-5xl text-amber-600"></i></div>
+                <h3 class="font-bold mt-3 text-lg">${currentLang === 'zh' ? item.chnName : item.engName}</h3>
+                <p class="text-red-600 font-semibold">£${item.price.toFixed(2)}</p>
+            </div>`).join('');
+            const swiperContainer = document.querySelector('.featuredSwiper .swiper-wrapper');
+            if (swiperContainer) { swiperContainer.innerHTML = html; if (featuredSwiper) featuredSwiper.update(); else featuredSwiper = new Swiper('.featuredSwiper', { slidesPerView: 1, spaceBetween: 20, pagination: { el: '.swiper-pagination', clickable: true }, navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }, breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } } }); }
+        }
+
+        function initMap() { const map = L.map('map').setView([51.5110, -0.1310], 15); L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>' }).addTo(map); L.marker([51.5110, -0.1310]).addTo(map).bindPopup('New China Takeaway<br>15 Gerrard St, London').openPopup(); }
+        window.addEventListener('load', () => { initMap(); renderCategoryFilters(); renderMenu(); renderFeaturedSlider(); updateLanguage(); document.getElementById('langZhBtn').onclick = () => { currentLang = 'zh'; updateLanguage(); }; document.getElementById('langEnBtn').onclick = () => { currentLang = 'en'; updateLanguage(); }; });
+    </script>
+</body>
+</html>
