@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garden Sushi Takeaway - 英式日料</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-cream: #faf7f2;
+            --bg-warm: #f5f0e8;
+            --brown-dark: #3d2e1e;
+            --brown-mid: #6b5a47;
+            --brown-light: #8b7355;
+            --green-deep: #2d4a3e;
+            --green-mid: #4a7c64;
+            --red-accent: #b5343a;
+            --red-dark: #8b1a1f;
+            --gold: #c9a962;
+            --gold-light: #e0d0a8;
+            --white: #ffffff;
+            --gray-100: #f8f5f0;
+            --gray-200: #e8e3da;
+            --gray-300: #d4cfc6;
+            --gray-500: #8a857c;
+            --gray-700: #4a4540;
+            --gray-900: #1a1815;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.10);
+            --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.14);
+            --shadow-xl: 0 16px 60px rgba(0, 0, 0, 0.18);
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --font-jp: 'Noto Serif JP', 'Noto Sans SC', serif;
+            --font-cn: 'Noto Sans SC', 'Inter', sans-serif;
+            --font-en: 'Inter', 'Noto Sans SC', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-cn);
+            background-color: var(--bg-cream);
+            color: var(--gray-900);
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ============ OVERLAY & MODAL ============ */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            animation: fadeInOverlay 0.4s ease;
+        }
+        @keyframes fadeInOverlay {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .overlay.hidden {
+            display: none;
+        }
+        .modal {
+            position: relative;
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            max-width: 600px;
+            width: 100%;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            animation: slideUpModal 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        @keyframes slideUpModal {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .modal-img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            display: block;
+        }
+        @media (max-width: 480px) {
+            .modal-img {
+                height: 200px;
+            }
+        }
+        .modal-body {
+            padding: 2rem 1.8rem 2.2rem;
+            text-align: center;
+        }
+        .modal-logo {
+            font-family: var(--font-jp);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--brown-dark);
+            letter-spacing: 0.04em;
+            margin-bottom: 0.5rem;
+        }
+        .modal-desc {
+            font-size: 0.95rem;
+            color: var(--gray-700);
+            margin-bottom: 1.6rem;
+            line-height: 1.6;
+        }
+        .modal-btns {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.7rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+            text-decoration: none;
+            letter-spacing: 0.02em;
+            font-family: var(--font-cn);
+        }
+        .btn-primary {
+            background: var(--red-accent);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(181, 52, 58, 0.35);
+        }
+        .btn-primary:hover {
+            background: var(--red-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(181, 52, 58, 0.45);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--brown-mid);
+            border: 2px solid var(--gray-300);
+        }
+        .btn-outline:hover {
+            border-color: var(--brown-mid);
+            background: var(--gray-100);
+        }
+        .modal-close {
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--gray-700);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            z-index: 2;
+            backdrop-filter: blur(4px);
+        }
+        .modal-close:hover {
+            background: #fff;
+            color: var(--gray-900);
+            transform: rotate(90deg);
+        }
+
+        /* ============ NAVBAR ============ */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(250, 247, 242, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 0.6rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            transition: var(--transition);
+        }
+        .navbar.scrolled {
+            box-shadow: var(--shadow-md);
+            background: rgba(250, 247, 242, 0.97);
+        }
+        .nav-brand {
+            font-family: var(--font-jp);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--brown-dark);
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+        .nav-brand span {
+            color: var(--red-accent);
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray-700);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 0.3rem 0;
+            white-space: nowrap;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--red-accent);
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+        .nav-links a:hover {
+            color: var(--red-accent);
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .lang-switch {
+            display: flex;
+            gap: 0.3rem;
+            background: var(--gray-200);
+            border-radius: 50px;
+            padding: 3px;
+            cursor: pointer;
+            user-select: none;
+            flex-shrink: 0;
+        }
+        .lang-option {
+            padding: 0.35rem 1rem;
+            border-radius: 50px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            transition: var(--transition);
+            letter-spacing: 0.03em;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            color: var(--gray-700);
+            font-family: var(--font-cn);
+        }
+        .lang-option.active {
+            background: var(--white);
+            color: var(--brown-dark);
+            box-shadow: var(--shadow-sm);
+        }
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.6rem;
+            cursor: pointer;
+            color: var(--brown-dark);
+            padding: 0.3rem;
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                gap: 0.4rem;
+                padding-top: 0.5rem;
+                background: rgba(250, 247, 242, 0.98);
+                border-radius: var(--radius-md);
+                padding: 1rem;
+            }
+            .nav-links.open {
+                display: flex;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .navbar {
+                padding: 0.5rem 1rem;
+            }
+        }
+
+        /* ============ HERO ============ */
+        .hero {
+            position: relative;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: url('https://images.unsplash.com/photo-1552566626-52f8b828add9?w=1400&q=80') center/cover no-repeat;
+            background-attachment: fixed;
+        }
+        @media (max-width: 768px) {
+            .hero {
+                min-height: 70vh;
+                background-attachment: scroll;
+            }
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(30, 20, 12, 0.75) 0%, rgba(30, 20, 12, 0.45) 50%, rgba(20, 15, 8, 0.7) 100%);
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+            padding: 3rem 2rem;
+            margin-left: 5%;
+            animation: fadeInLeft 0.9s ease;
+        }
+        @keyframes fadeInLeft {
+            from {
+                transform: translateX(-40px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        @media (max-width: 768px) {
+            .hero-content {
+                margin-left: 0;
+                padding: 2rem 1.5rem;
+                text-align: center;
+                max-width: 100%;
+            }
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            color: #fff;
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            letter-spacing: 0.06em;
+            margin-bottom: 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            font-weight: 500;
+        }
+        .hero h1 {
+            font-family: var(--font-jp);
+            font-size: clamp(2.2rem, 5vw, 3.6rem);
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            letter-spacing: 0.03em;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+        .hero h1 .accent {
+            color: #f0c27a;
+        }
+        .hero p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.05rem;
+            margin-bottom: 1.8rem;
+            line-height: 1.7;
+            text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+        }
+        .hero .btn-primary {
+            font-size: 1rem;
+            padding: 0.85rem 2.2rem;
+            letter-spacing: 0.04em;
+        }
+
+        /* ============ SECTION COMMON ============ */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        @media (max-width: 768px) {
+            .section {
+                padding: 3rem 1rem;
+            }
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .section-title .en-label {
+            font-family: var(--font-en);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--red-accent);
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        .section-title h2 {
+            font-family: var(--font-jp);
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 700;
+            color: var(--brown-dark);
+            letter-spacing: 0.04em;
+        }
+        .section-title .divider {
+            width: 50px;
+            height: 3px;
+            background: var(--gold);
+            margin: 0.8rem auto 0;
+            border-radius: 3px;
+        }
+
+        /* ============ FEATURED DISHES ============ */
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.8rem;
+        }
+        .dish-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            cursor: pointer;
+            border: 1px solid transparent;
+            position: relative;
+        }
+        .dish-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--gold-light);
+        }
+        .dish-card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        .dish-card-body {
+            padding: 1.2rem 1.3rem 1.4rem;
+        }
+        .dish-card-cat {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--green-mid);
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        .dish-card h3 {
+            font-family: var(--font-jp);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--brown-dark);
+            margin-bottom: 0.3rem;
+        }
+        .dish-card .en-name {
+            font-size: 0.82rem;
+            color: var(--gray-500);
+            margin-bottom: 0.6rem;
+        }
+        .dish-card .price {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--red-accent);
+            letter-spacing: 0.02em;
+        }
+        .dish-card .price::before {
+            content: '£';
+        }
+
+        /* ============ MENU SECTION ============ */
+        .menu-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        .menu-filter-btn {
+            padding: 0.5rem 1.1rem;
+            border-radius: 50px;
+            border: 1.5px solid var(--gray-300);
+            background: var(--white);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: var(--transition);
+            color: var(--gray-700);
+            font-family: var(--font-cn);
+            white-space: nowrap;
+        }
+        .menu-filter-btn:hover,
+        .menu-filter-btn.active {
+            background: var(--brown-dark);
+            color: #fff;
+            border-color: var(--brown-dark);
+        }
+        .menu-search {
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 2rem;
+            padding: 0.7rem 1.2rem;
+            border-radius: 50px;
+            border: 1.5px solid var(--gray-300);
+            font-size: 0.9rem;
+            font-family: var(--font-cn);
+            background: var(--white);
+            transition: var(--transition);
+            outline: none;
+        }
+        .menu-search:focus {
+            border-color: var(--brown-light);
+            box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
+        }
+        .accordion {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--white);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 0.8rem;
+            border: 1px solid var(--gray-200);
+        }
+        .accordion-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.4rem;
+            cursor: pointer;
+            user-select: none;
+            transition: var(--transition);
+            background: var(--white);
+            gap: 1rem;
+        }
+        .accordion-header:hover {
+            background: var(--gray-100);
+        }
+        .accordion-header .cat-name {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--brown-dark);
+            letter-spacing: 0.03em;
+            font-family: var(--font-jp);
+        }
+        .accordion-header .cat-count {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+            font-weight: 400;
+            white-space: nowrap;
+        }
+        .accordion-arrow {
+            font-size: 1.2rem;
+            transition: var(--transition);
+            color: var(--gray-500);
+            flex-shrink: 0;
+        }
+        .accordion.open .accordion-arrow {
+            transform: rotate(180deg);
+            color: var(--red-accent);
+        }
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease;
+        }
+        .accordion.open .accordion-body {
+            max-height: 8000px;
+        }
+        .accordion-body-inner {
+            padding: 0 1.4rem 1.2rem;
+        }
+        .menu-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        .menu-table th {
+            background: var(--gray-100);
+            padding: 0.7rem 0.8rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--brown-mid);
+            font-size: 0.78rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--gray-200);
+        }
+        .menu-table td {
+            padding: 0.6rem 0.8rem;
+            border-bottom: 1px solid var(--gray-200);
+            color: var(--gray-700);
+        }
+        .menu-table tr:hover td {
+            background: #fdfbf7;
+        }
+        .menu-table .price-col {
+            font-weight: 700;
+            color: var(--red-accent);
+            white-space: nowrap;
+            text-align: right;
+        }
+        .menu-table .code-col {
+            color: var(--gray-500);
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+        @media (max-width: 600px) {
+            .menu-table {
+                font-size: 0.78rem;
+            }
+            .menu-table th,
+            .menu-table td {
+                padding: 0.5rem 0.4rem;
+            }
+            .accordion-header {
+                padding: 0.8rem 1rem;
+            }
+            .accordion-body-inner {
+                padding: 0 0.6rem 0.8rem;
+            }
+        }
+
+        /* ============ REVIEWS ============ */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.8rem;
+        }
+        .review-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 1.8rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-200);
+            transition: var(--transition);
+            text-align: center;
+        }
+        .review-card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--gold-light);
+        }
+        .review-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--gold-light);
+        }
+        .stars {
+            color: #e8b82a;
+            font-size: 1.1rem;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.6rem;
+        }
+        .review-text {
+            font-style: italic;
+            color: var(--gray-700);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+        }
+        .review-author {
+            font-weight: 700;
+            color: var(--brown-dark);
+            font-size: 0.9rem;
+        }
+        .review-date {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        /* ============ BOOKING + MAP ============ */
+        .booking-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: stretch;
+        }
+        @media (max-width: 900px) {
+            .booking-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        .booking-form-wrap {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-200);
+        }
+        .booking-form-wrap h3 {
+            font-family: var(--font-jp);
+            font-size: 1.3rem;
+            margin-bottom: 1.4rem;
+            color: var(--brown-dark);
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            font-size: 0.85rem;
+            color: var(--gray-700);
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border: 1.5px solid var(--gray-300);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-family: var(--font-cn);
+            transition: var(--transition);
+            background: var(--gray-100);
+            outline: none;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--brown-light);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.08);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+        @media (max-width: 480px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        .map-wrap {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-200);
+            min-height: 350px;
+            background: var(--gray-200);
+        }
+        .map-wrap iframe {
+            width: 100%;
+            height: 100%;
+            min-height: 350px;
+            border: none;
+        }
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            color: var(--green-mid);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        .form-success.show {
+            display: block;
+        }
+
+        /* ============ FOOTER ============ */
+        .footer {
+            background: var(--brown-dark);
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            padding: 2.5rem 2rem;
+            font-size: 0.9rem;
+        }
+        .footer .social-links {
+            display: flex;
+            gap: 1.2rem;
+            justify-content: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        .footer .social-links a {
+            color: rgba(255, 255, 255, 0.75);
+            text-decoration: none;
+            font-size: 1.4rem;
+            transition: var(--transition);
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .footer .social-links a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.18);
+            transform: translateY(-3px);
+        }
+        .footer .brand-footer {
+            font-family: var(--font-jp);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 0.04em;
+        }
+
+        /* ============ BACK TO TOP ============ */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--brown-dark);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            z-index: 900;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .back-to-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .back-to-top:hover {
+            background: var(--red-accent);
+            transform: translateY(-3px);
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 768px) {
+            .featured-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: 1rem;
+            }
+            .reviews-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .section {
+                padding: 2.5rem 1rem;
+            }
+            .dish-card-img {
+                height: 160px;
+            }
+        }
+        @media (max-width: 480px) {
+            .featured-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.7rem;
+            }
+            .dish-card-body {
+                padding: 0.8rem;
+            }
+            .dish-card h3 {
+                font-size: 0.85rem;
+            }
+            .dish-card .en-name {
+                font-size: 0.7rem;
+            }
+            .dish-card .price {
+                font-size: 0.95rem;
+            }
+            .dish-card-img {
+                height: 120px;
+            }
+            .modal-body {
+                padding: 1.4rem 1rem;
+            }
+            .modal-logo {
+                font-size: 1.2rem;
+            }
+            .btn {
+                padding: 0.55rem 1.2rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== OVERLAY MODAL ==================== -->
+    <div class="overlay" id="welcomeOverlay">
+        <div class="modal">
+            <button class="modal-close" id="modalCloseBtn" title="关闭">✕</button>
+            <img
+            class="modal-img"
+            src="https://images.unsplash.com/photo-1579027989536-b7b1f875659b?w=800&q=80"
+            alt="Japanese Restaurant"
+            loading="eager"
+            >
+            <div class="modal-body">
+                <div class="modal-logo" data-lang-zh="Garden Sushi Takeaway" data-lang-en="Garden Sushi Takeaway">Garden Sushi Takeaway</div>
+                <p class="modal-desc" data-lang-zh="欢迎光临！我们是一家融合英式风味的日式料理外卖店，致力于为您带来精致的寿司、刺身与和风美食体验。品质食材，匠心制作。"
+                data-lang-en="Welcome! We are a British-Japanese fusion takeaway, dedicated to bringing you exquisite sushi, sashimi, and Japanese cuisine. Quality ingredients, crafted with care.">
+                欢迎光临！我们是一家融合英式风味的日式料理外卖店，致力于为您带来精致的寿司、刺身与和风美食体验。品质食材，匠心制作。
+            </p>
+            <div class="modal-btns">
+                <button class="btn btn-primary" id="modalBookBtn" data-lang-zh="立即预约" data-lang-en="Book Now">立即预约</button>
+                <button class="btn btn-outline" id="modalCloseBtn2" data-lang-zh="稍后浏览" data-lang-en="Browse Later">稍后浏览</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== NAVBAR ==================== -->
+<nav class="navbar" id="navbar">
+    <div class="nav-brand">Garden <span>Sushi</span> Takeaway</div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="菜单">☰</button>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#hero" data-lang-zh="首页" data-lang-en="Home">首页</a></li>
+        <li><a href="#featured" data-lang-zh="精选菜品" data-lang-en="Featured">精选菜品</a></li>
+        <li><a href="#menu" data-lang-zh="完整菜单" data-lang-en="Full Menu">完整菜单</a></li>
+        <li><a href="#reviews" data-lang-zh="顾客评价" data-lang-en="Reviews">顾客评价</a></li>
+        <li><a href="#booking" data-lang-zh="预约订餐" data-lang-en="Booking">预约订餐</a></li>
+    </ul>
+    <div class="lang-switch" id="langSwitch">
+        <button class="lang-option active" data-lang="zh">中文</button>
+        <button class="lang-option" data-lang="en">English</button>
+    </div>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero" id="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <div class="hero-badge" data-lang-zh="🏮 英式日料 · 外卖专门店" data-lang-en="🏮 British-Japanese · Takeaway">🏮 英式日料 · 外卖专门店</div>
+        <h1 data-lang-zh="禅意和风<br>品味<span class='accent'>匠心</span>寿司" data-lang-en="Zen & Harmony<br>Savor <span class='accent'>Artisan</span> Sushi">
+            禅意和风<br>品味<span class="accent">匠心</span>寿司
+        </h1>
+        <p data-lang-zh="Garden Sushi Takeaway 将传统日式料理与英伦风味巧妙融合，选用新鲜食材，以精湛技艺呈现每一份寿司、刺身与和风佳肴。"
+        data-lang-en="Garden Sushi Takeaway blends traditional Japanese cuisine with British flair, using fresh ingredients and masterful techniques to present every piece of sushi, sashimi, and Japanese delicacy.">
+        Garden Sushi Takeaway 将传统日式料理与英伦风味巧妙融合，选用新鲜食材，以精湛技艺呈现每一份寿司、刺身与和风佳肴。
+    </p>
+    <a href="#booking" class="btn btn-primary" data-lang-zh="预约订餐" data-lang-en="Book a Table">预约订餐</a>
+</div>
+</section>
+
+<!-- ==================== FEATURED DISHES ==================== -->
+<section class="section" id="featured">
+    <div class="section-title">
+        <div class="en-label" data-lang-zh="精选推荐" data-lang-en="CHEF'S PICKS">精选推荐</div>
+        <h2 data-lang-zh="招牌菜品" data-lang-en="Signature Dishes">招牌菜品</h2>
+        <div class="divider"></div>
+    </div>
+    <div class="featured-grid" id="featuredGrid"></div>
+</section>
+
+<!-- ==================== FULL MENU ==================== -->
+<section class="section" id="menu" style="background:var(--bg-warm);">
+    <div class="section-title">
+        <div class="en-label" data-lang-zh="完整菜单" data-lang-en="COMPLETE MENU">完整菜单</div>
+        <h2 data-lang-zh="全部菜品" data-lang-en="All Items">全部菜品</h2>
+        <div class="divider"></div>
+    </div>
+    <input type="text" class="menu-search" id="menuSearch" placeholder="搜索菜品 / Search dishes..." data-lang-zh-placeholder="搜索菜品..." data-lang-en-placeholder="Search dishes...">
+    <div class="menu-controls" id="menuControls"></div>
+    <div id="menuAccordionContainer"></div>
+</section>
+
+<!-- ==================== REVIEWS ==================== -->
+<section class="section" id="reviews">
+    <div class="section-title">
+        <div class="en-label" data-lang-zh="顾客评价" data-lang-en="TESTIMONIALS">顾客评价</div>
+        <h2 data-lang-zh="食客好评" data-lang-en="What Our Guests Say">食客好评</h2>
+        <div class="divider"></div>
+    </div>
+    <div class="reviews-grid" id="reviewsGrid"></div>
+</section>
+
+<!-- ==================== BOOKING + MAP ==================== -->
+<section class="section" id="booking">
+    <div class="section-title">
+        <div class="en-label" data-lang-zh="预约订餐" data-lang-en="RESERVATION">预约订餐</div>
+        <h2 data-lang-zh="预约表单" data-lang-en="Book Your Table">预约表单</h2>
+        <div class="divider"></div>
+    </div>
+    <div class="booking-row">
+        <div class="booking-form-wrap" id="bookingFormWrap">
+            <h3 data-lang-zh="在线预约" data-lang-en="Online Reservation">在线预约</h3>
+            <form id="bookingForm" action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value="ba4171ba-fb95-4e10-aab0-7dfb643a81fa">
+                <input type="hidden" name="subject" value="Garden Sushi Takeaway - 新预约">
+                <input type="hidden" name="from_name" value="Garden Sushi Website">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-lang-zh="姓名" data-lang-en="Name">姓名</label>
+                        <input type="text" name="name" required placeholder="Your name">
+                    </div>
+                    <div class="form-group">
+                        <label data-lang-zh="邮箱" data-lang-en="Email">邮箱</label>
+                        <input type="email" name="email" required placeholder="your@email.com">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-lang-zh="电话" data-lang-en="Phone">电话</label>
+                        <input type="tel" name="phone" placeholder="+44 7xxx xxx xxx">
+                    </div>
+                    <div class="form-group">
+                        <label data-lang-zh="人数" data-lang-en="Guests">人数</label>
+                        <select name="guests">
+                            <option value="1">1</option>
+                            <option value="2" selected>2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6+">6+</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-lang-zh="日期" data-lang-en="Date">日期</label>
+                        <input type="date" name="date">
+                    </div>
+                    <div class="form-group">
+                        <label data-lang-zh="时间" data-lang-en="Time">时间</label>
+                        <input type="time" name="time">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label data-lang-zh="备注" data-lang-en="Notes">备注</label>
+                    <textarea name="message" rows="3" placeholder="Any special requests..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;" data-lang-zh="提交预约" data-lang-en="Submit Reservation">提交预约</button>
+            </form>
+            <div class="form-success" id="formSuccess">
+                ✅ <span data-lang-zh="预约已提交！我们会尽快与您联系。" data-lang-en="Reservation submitted! We'll contact you soon.">预约已提交！我们会尽快与您联系。</span>
+            </div>
+        </div>
+        <div class="map-wrap">
+            <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2483.546853656888!2d-0.127758684229952!3d51.5073507796353!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604ddae95b455%3A0xcd7f7c7e8f8b7c8!2sLondon%20UK!5e0!3m2!1sen!2s!4v1700000000000"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Restaurant Location"
+        ></iframe>
+    </div>
+</div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+    <div class="social-links">
+        <a href="#" title="Facebook">📘</a>
+        <a href="#" title="Instagram">📷</a>
+        <a href="#" title="Twitter/X">𝕏</a>
+        <a href="#" title="WhatsApp">💬</a>
+        <a href="#" title="Email">✉️</a>
+    </div>
+    <div class="brand-footer">Garden Sushi Takeaway</div>
+    <p style="margin-top:0.5rem;font-size:0.8rem;" data-lang-zh="© 2024 Garden Sushi Takeaway. 英式日料外卖专门店。" data-lang-en="© 2024 Garden Sushi Takeaway. British-Japanese takeaway.">© 2024 Garden Sushi Takeaway. 英式日料外卖专门店。</p>
+</footer>
+
+<!-- ==================== BACK TO TOP ==================== -->
+<button class="back-to-top" id="backToTop" title="回到顶部">↑</button>
+
+<script>
+    (function() {
+        // ==================== DATA ====================
+        const menuData = [
+            { cat: 'Appetiser', zh: '鸡肉煎饺', en: 'Chicken Gyoza', code: 'S1', price: 6.6 },
+            { cat: 'Appetiser', zh: '蔬菜煎饺', en: 'Yasai Gyoza', code: 'S2', price: 6.2 },
+            { cat: 'Appetiser', zh: '枝豆(毛豆)', en: 'Edamame', code: 'S3', price: 5.5 },
+            { cat: 'Appetiser', zh: '辣味枝豆', en: 'Spicy Edamame', code: 'S4', price: 5.6 },
+            { cat: 'Appetiser', zh: '中华海草', en: 'Chuka Wakame', code: 'S5', price: 5.4 },
+            { cat: 'Appetiser', zh: '日式醋拌小菜', en: 'Sunomono', code: 'S6', price: 4.6 },
+            { cat: 'Appetiser', zh: '日式绿色沙拉', en: 'Japanese Green Salad', code: 'S7', price: 6.8 },
+            { cat: 'Appetiser', zh: '味噌汤', en: 'Miso Soup', code: 'S8', price: 3.9 },
+            { cat: 'Appetiser', zh: '菠菜沙拉', en: 'Spinach Salad', code: 'S9', price: 4.6 },
+            { cat: 'Appetiser', zh: '日式唐扬炸鸡', en: 'Tori Karaage', code: 'S10', price: 7.3 },
+            { cat: 'Appetiser', zh: '芝麻鸡翅', en: 'Gome Tebu', code: 'S11', price: 7.5 },
+            { cat: 'Appetiser', zh: '章鱼小丸子', en: 'Takoyaki', code: 'S12', price: 6.8 },
+            { cat: 'Appetiser', zh: '南瓜可乐饼', en: 'Pumpkin Croquettes', code: 'S13', price: 6.3 },
+            { cat: 'Appetiser', zh: '迷你蔬菜春卷', en: 'Mini Yasai Spring Roll', code: 'S14', price: 5.8 },
+            { cat: 'Appetiser', zh: '扬出豆腐（5块）', en: 'Agedashi Tofu(5 pieces)', code: 'S15', price: 6.8 },
+            { cat: 'Appetiser', zh: '炸虾排', en: 'Prawn Katsu', code: 'S16', price: 7.9 },
+            { cat: 'Appetiser', zh: '椒盐鱿鱼天妇罗', en: 'Salt and Pepper Ika Tempura', code: 'S17', price: 9.8 },
+            { cat: 'Appetiser', zh: '炸虾天妇罗', en: 'Prawn Tempura', code: 'S18', price: 12.5 },
+            { cat: 'Appetiser', zh: '精进(素食)天妇罗', en: 'Shojin Tempura', code: 'S19', price: 8.9 },
+            { cat: 'Appetiser', zh: '软壳蟹天妇罗', en: 'Soft Shell Crab Tempura', code: 'S20', price: 12.8 },
+            { cat: 'Nigiri 2 Pieces', zh: '希鲮鱼握寿司', en: 'Simon Nigiri', code: 'S21', price: 5.45 },
+            { cat: 'Nigiri 2 Pieces', zh: '金枪鱼握寿司', en: 'Tuna Nigiri', code: 'S22', price: 6.95 },
+            { cat: 'Nigiri 2 Pieces', zh: '中腹金枪鱼握寿司', en: 'Chu Toro Nigiri', code: 'S23', price: 7.9 },
+            { cat: 'Nigiri 2 Pieces', zh: '海鲈鱼握寿司', en: 'Sea Bass Nigiri', code: 'S24', price: 5.45 },
+            { cat: 'Nigiri 2 Pieces', zh: '鳗鱼握寿司', en: 'Unagi Nigiri', code: 'S25', price: 5.5 },
+            { cat: 'Nigiri 2 Pieces', zh: '鰤鱼握寿司', en: 'Yellow Tail Nigiri', code: 'S26', price: 5.95 },
+            { cat: 'Nigiri 2 Pieces', zh: '甜虾握寿司', en: 'Prawn Nigiri', code: 'S27', price: 5.3 },
+            { cat: 'Nigiri 2 Pieces', zh: '生甜虾', en: 'Ama Ebi', code: 'S28', price: 4.9 },
+            { cat: 'Nigiri 2 Pieces', zh: '炙烧金枪鱼握寿司', en: 'Aburi Tuna Nigiri', code: 'S29', price: 7.9 },
+            { cat: 'Nigiri 2 Pieces', zh: '炙烧三文鱼腹握寿司', en: 'Aburi Salmon Toro Nigiri', code: 'S30', price: 7.95 },
+            { cat: 'Nigiri 2 Pieces', zh: '玉子烧握寿司', en: 'Tomago Nigiri', code: 'S31', price: 4.2 },
+            { cat: 'Nigiri 2 Pieces', zh: '稻荷寿司', en: 'Inari Nigiri', code: 'S32', price: 4.2 },
+            { cat: 'Hosomaki     6 pieces', zh: '三文鱼细卷', en: 'Salmon Maki', code: 'S33', price: 5.5 },
+            { cat: 'Hosomaki     6 pieces', zh: '金枪鱼细卷', en: 'Tuna Maki', code: 'S34', price: 6.5 },
+            { cat: 'Hosomaki     6 pieces', zh: '鰤鱼细卷', en: 'Yellow Tail Maki', code: 'S35', price: 6.3 },
+            { cat: 'Hosomaki     6 pieces', zh: '黄瓜细卷', en: 'Cucumber Maki', code: 'S36', price: 4.3 },
+            { cat: 'Hosomaki     6 pieces', zh: '牛油果细卷', en: 'Avocado Maki', code: 'S37', price: 4.5 },
+            { cat: 'Hosomaki     6 pieces', zh: '蟹柳细卷', en: 'Kanikama Crab Sticks Maki', code: 'S38', price: 4.6 },
+            { cat: 'Tamaki (hand roll)1 pieces', zh: '三文鱼手卷', en: 'Salmon Tamaki', code: 'S39', price: 6.95 },
+            { cat: 'Tamaki (hand roll)1 pieces', zh: '炸虾天妇罗手卷', en: 'prawn tempura Tamaki', code: 'S40',
+            price: 7.3 },
+            { cat: 'Tamaki (hand roll)1 pieces', zh: '加州手卷', en: 'California Tamaki', code: 'S41', price: 6.8 },
+            { cat: 'Tamaki (hand roll)1 pieces', zh: '辣味金枪鱼手卷', en: 'Spicy Tuna Tamaki', code: 'S42', price: 8.3 },
+            { cat: 'Tamaki (hand roll)1 pieces', zh: '鳗鱼手卷', en: 'Unagi Tamaki', code: 'S43', price: 7.2 },
+            { cat: 'Tamaki (hand roll)1 pieces', zh: '鰤鱼手卷', en: 'Hamachi Tamaki', code: 'S44', price: 8.2 },
+            { cat: 'Tamaki (hand roll)1 pieces', zh: '软壳蟹手卷', en: 'Soft Shell Crab Tamaki', code: 'S45', price: 8.5 },
+            { cat: 'Uramaki roll 8 pieces', zh: '三文鱼牛油果卷', en: 'Salmon Avocado Roll', code: 'S46', price: 9.95 },
+            { cat: 'Uramaki roll 8 pieces', zh: '辣味金枪鱼卷', en: 'Spicy Tuna Roll', code: 'S47', price: 11.5 },
+            { cat: 'Uramaki roll 8 pieces', zh: '加州卷', en: 'California Roll', code: 'S48', price: 10.3 },
+            { cat: 'Uramaki roll 8 pieces', zh: '鳗鱼卷', en: 'Unagi Roll', code: 'S49', price: 11.2 },
+            { cat: 'Uramaki roll 8 pieces', zh: '辣味三文鱼卷', en: 'Spicy Salmon Roll', code: 'S50', price: 10.5 },
+            { cat: 'Uramaki roll 8 pieces', zh: '金枪鱼卷', en: 'Tuna Roll', code: 'S51', price: 11.5 },
+            { cat: 'Uramaki roll 8 pieces', zh: '炸虾天妇罗卷', en: 'Prawn Tempura Roll', code: 'S52', price: 10.9 },
+            { cat: 'Uramaki roll 8 pieces', zh: '彩虹卷', en: 'Rainbow Roll', code: 'S53', price: 17.5 },
+            { cat: 'Uramaki roll 8 pieces', zh: '炙烧美乃滋卷', en: 'Aburi Yumi Roll', code: 'S54', price: 17.8 },
+            { cat: 'Uramaki roll 8 pieces', zh: '樱寿司龙卷', en: 'Sakura Sushi House Dragon Roll', code: 'S55',
+            price: 18.3 },
+            { cat: 'Uramaki roll 8 pieces', zh: '海洋珍珠卷', en: 'Ocean Pearl Roll', code: 'S56', price: 18.5 },
+            { cat: 'Uramaki roll 8 pieces', zh: '蜘蛛卷（软壳蟹卷）', en: 'Spider Roll', code: 'S57', price: 18.95 },
+            { cat: 'Sashimi', zh: '三文鱼刺身', en: 'Sake sashimi', code: 'S58', price: 10.5 },
+            { cat: 'Sashimi', zh: '金枪鱼赤身刺身', en: 'Maguro-Akamai Sashimi', code: 'S59', price: 12.8 },
+            { cat: 'Sashimi', zh: '海鲈鱼刺身', en: 'Sea Bass Sashimi', code: 'S60', price: 9.8 },
+            { cat: 'Sashimi', zh: '鰤鱼刺身', en: 'Hamachi Sashimi', code: 'S61', price: 12.5 },
+            { cat: 'Sashimi', zh: '金枪鱼中腹刺身', en: 'Maguro-Chu Toro Sashimi', code: 'S62', price: 13.8 },
+            { cat: 'Sashimi', zh: '甜虾刺身', en: 'Ama Ebi Sashimi', code: 'S63', price: 6.9 },
+            { cat: 'Sashimi', zh: '帆立贝刺身', en: 'Hotate Sashimi', code: 'S64', price: 11.8 },
+            { cat: 'Sashimi', zh: '京都风味刺身拼盘', en: 'Kyoto sashimi', code: 'S65', price: 28.8 },
+            { cat: 'Sashimi', zh: '特选刺身盛合', en: 'Deluxe sashimi platter', code: 'S66', price: 58.8 },
+            { cat: 'Sashimi', zh: 'SP麻辣烟熏生鱼片', en: 'SP Seared Spicy Smoky Sashimi', code: 'S67', price: 11.5 },
+            { cat: 'Sashimi', zh: 'SP金枪鱼赤身', en: 'SP Maguro-Akami', code: 'S68', price: 13.6 },
+            { cat: 'Sashimi', zh: 'SP鰤鱼', en: 'SP Hamachi', code: 'S69', price: 12.9 },
+            { cat: 'Futomaki', zh: '三文鱼牛油果太卷', en: 'Salmon Avocado Futomaki', code: 'S70', price: 8.5 },
+            { cat: 'Futomaki', zh: '炸虾天妇罗太卷', en: 'Prawn Tempura Futomaki', code: 'S71', price: 8.9 },
+            { cat: 'Futomaki', zh: '鳗鱼太卷', en: 'Unagi Futomaki', code: 'S72', price: 8.9 },
+            { cat: 'Sushi Set', zh: '三文鱼套餐（19贯）', en: 'Salmon Set (19 pieces)', code: 'S73', price: 25.5 },
+            { cat: 'Sushi Set', zh: '蓝鳍金枪鱼套餐（16贯）', en: 'Bluefin Tuna Set(16 pieces)', code: 'S74', price: 27.8 },
+            { cat: 'Sushi Set', zh: '握寿司套餐（16贯）', en: 'Nigiri Sushi Set(16 pieces)', code: 'S75', price: 28.8 },
+            { cat: 'Sashimi Don', zh: '三文鱼刺身丼', en: 'Salmon Sashimi Don', code: 'S76', price: 17.8 },
+            { cat: 'Sashimi Don', zh: '三文鱼金枪鱼双拼丼', en: 'Salmon & Tuna Don', code: 'S77', price: 19.8 },
+            { cat: 'Sashimi Don', zh: '综合刺身丼', en: 'Assorted Sashimi Don', code: 'S78', price: 25.8 },
+            { cat: 'Japanese Curry', zh: '炸鸡排咖喱饭', en: 'Chicken Katsu Curry', code: 'S79', price: 14.8 },
+            { cat: 'Japanese Curry', zh: '炸虾排咖喱饭', en: 'Prawn Katsu Curry', code: 'S80', price: 15.6 },
+            { cat: 'Japanese Curry', zh: '南瓜可乐饼咖喱饭', en: 'Pumpkin Katsu Curry', code: 'S81', price: 13.8 },
+            { cat: 'Japanese Curry', zh: '扬出豆腐咖喱饭', en: 'Agedashi Tofu Curry', code: 'S82', price: 13.9 },
+            { cat: 'Hot Donburi', zh: '烤肋眼牛排', en: 'Grilled Rib Eye Steak', code: 'S83', price: 19.8 },
+            { cat: 'Hot Donburi', zh: '香煎三文鱼', en: 'Sauteed Salmon', code: 'S84', price: 18.9 },
+            { cat: 'Hot Donburi', zh: '烤鸡腿肉', en: 'Grilled Chicken Thigh', code: 'S85', price: 15.6 },
+            { cat: 'Hot Donburi', zh: '烤猪五花', en: 'Grilled Pork Belly', code: 'S86', price: 16.8 },
+            { cat: 'Hot Donburi', zh: '扬出豆腐', en: 'Agedashi Tofu', code: 'S87', price: 13.9 },
+            { cat: 'Hot Donburi', zh: '蒲烧鳗鱼', en: 'Kabayaki Unagi', code: 'S87b', price: 17.8 },
+            { cat: 'Bento Box', zh: '炸鸡便当', en: 'Chicken Bento Box', code: 'S88', price: 17.9 },
+            { cat: 'Bento Box', zh: '海鲜便当', en: 'Seafood Bento Box', code: 'S89', price: 18.5 },
+            { cat: 'Bento Box', zh: '鳗鱼便当', en: 'Unagi Bento Box', code: 'S90', price: 18.9 },
+            { cat: 'Bento Box', zh: '素食便当', en: 'Green Bento Box', code: 'S91', price: 16.8 },
+            { cat: 'Yakisoba', zh: '鸡肉炒面', en: 'Chicken Yakisoba', code: 'S92', price: 12.9 },
+            { cat: 'Yakisoba', zh: '鲜虾炒面', en: 'Prawn Yakisoba', code: 'S93', price: 14.5 },
+            { cat: 'Yakisoba', zh: '蔬菜豆腐炒面', en: 'Vegetable Yofu Yakisoba', code: 'S94', price: 12.5 },
+            { cat: 'Yaki udon', zh: '鸡肉炒乌冬', en: 'Chicken Yaki Udon', code: 'S95', price: 13.5 },
+            { cat: 'Yaki udon', zh: '鲜虾炒乌冬', en: 'Prawn Yaki Udon', code: 'S96', price: 14.95 },
+            { cat: 'Yaki udon', zh: '蔬菜豆腐炒乌冬', en: 'Vegetable Tofu Yaki Udon', code: 'S97', price: 12.95 },
+            { cat: 'Kare Udon', zh: '鸡虾咖喱乌冬', en: 'Chicken and Prawn Kare Udon', code: 'S98', price: 15.45 },
+            { cat: 'Dashi Spicy Shoyu Udon Soup Base', zh: '甜辣酱烤鸡腿', en: 'Grilled Chicken Thighs with Sweet Chilli Sauce',
+                code: 'S99', price: 14.8 },
+            { cat: 'Dashi Spicy Shoyu Udon Soup Base', zh: '炸虾天妇罗乌冬汤面', en: 'Prawn Tempura Udon Soup', code: 'S100',
+                price: 15.5 },
+            { cat: 'Dashi Spicy Shoyu Udon Soup Base', zh: '甜辣酱扬出豆腐', en: 'Agedashi Tofu with Sweet Chilli Sauce',
+                code: 'S101', price: 13.5 },
+            { cat: 'Sides', zh: '日本白米饭', en: 'Japanese Steamed Rice', code: 'S102', price: 4.2 },
+            { cat: 'Sides', zh: '寿司醋饭', en: 'Sushi Rice', code: 'S103', price: 4.3 },
+            { cat: 'Sides', zh: '招牌饭', en: "Sakura's Rice", code: 'S104', price: 6.3 },
+            { cat: 'Sides', zh: '海草', en: 'Crispy Seaweed', code: 'S105', price: 3.5 },
+            { cat: 'Drinks', zh: '可口可乐（原味）330ml', en: 'Coca-cola original 330ml can', code: '', price: 2 },
+            { cat: 'Drinks', zh: '健怡可乐 330ml', en: 'Diet Coke 330ml can', code: '', price: 2 },
+            { cat: 'Drinks', zh: '雪碧 330ml', en: 'Sprite 330ml', code: '', price: 2 },
+            { cat: 'Drinks', zh: '波子汽水', en: 'Ramune-Japanese Soda', code: '', price: 4.9 },
+            { cat: 'Drinks', zh: '芦荟汁 500ml', en: 'Aloe Vera Juice 500ml', code: '', price: 3.8 },
+            { cat: 'Drinks', zh: '日式绿茶 500ml', en: 'Japanese Green Tea 500ml', code: '', price: 4.2 },
+            { cat: 'Drinks', zh: '日式乌龙茶 500ml', en: 'Japanese Oolong Tea 500ml', code: '', price: 4.2 },
+            { cat: 'Dessert', zh: '综合大福（4粒）', en: 'Assorted mochi(4pcs)', code: '', price: 7.8 },
+            { cat: 'Extra', zh: '咖喱汁', en: 'Curry sauce 12oz', code: '', price: 2.8 },
+            { cat: 'Extra', zh: '照烧汁', en: 'Teriyaki sauce 8oz', code: '', price: 2 },
+            { cat: 'Extra', zh: '日式蛋黄酱', en: 'Japanese mayo 2oz', code: '', price: 1.2 },
+            { cat: 'Extra', zh: '辣味蛋黄酱', en: 'Japanese spicy mayo 2oz', code: '', price: 1.2 },
+            { cat: 'Extra', zh: '甜辣汁', en: 'Sweet chilli sauce 2oz', code: '', price: 1.2 },
+            { cat: 'Extra', zh: '山葵', en: 'Wasabi 2oz', code: '', price: 1.2 },
+            { cat: 'Extra', zh: '腌姜', en: 'Ginger  2oz', code: '', price: 1.2 },
+            { cat: 'Extra', zh: '酱油', en: 'Soy sauce', code: '', price: 0.9 },
+            { cat: 'Extra', zh: '蒲烧鳗鱼汁', en: 'Unagi kabayaki sauce 2oz', code: '', price: 1.2 },
+            { cat: 'Extra', zh: '特制烧肉汁', en: 'House Yakiniku sauce 8oz', code: '', price: 3.45 },
+        ];
+
+        // Category name mappings
+        const catNamesZH = {
+            'Appetiser': '前菜',
+            'Nigiri 2 Pieces': '握寿司（2贯）',
+            'Hosomaki     6 pieces': '细卷（6个）',
+            'Tamaki (hand roll)1 pieces': '手卷（1个）',
+            'Uramaki roll 8 pieces': '里卷（8个）',
+            'Sashimi': '刺身',
+            'Futomaki': '太卷',
+            'Sushi Set': '寿司套装',
+            'Sashimi Don': '刺身丼',
+            'Japanese Curry': '日式咖喱',
+            'Hot Donburi': '热丼',
+            'Bento Box': '便当盒',
+            'Yakisoba': '炒面',
+            'Yaki udon': '炒乌冬',
+            'Kare Udon': '咖喱乌冬',
+            'Dashi Spicy Shoyu Udon Soup Base': '乌冬汤面',
+            'Sides': '配菜',
+            'Drinks': '饮品',
+            'Dessert': '甜点',
+            'Extra': '额外酱料',
+        };
+        const catNamesEN = {
+            'Appetiser': 'Appetisers',
+            'Nigiri 2 Pieces': 'Nigiri (2 pcs)',
+            'Hosomaki     6 pieces': 'Hosomaki (6 pcs)',
+            'Tamaki (hand roll)1 pieces': 'Tamaki Hand Roll (1 pc)',
+            'Uramaki roll 8 pieces': 'Uramaki Roll (8 pcs)',
+            'Sashimi': 'Sashimi',
+            'Futomaki': 'Futomaki',
+            'Sushi Set': 'Sushi Set',
+            'Sashimi Don': 'Sashimi Don',
+            'Japanese Curry': 'Japanese Curry',
+            'Hot Donburi': 'Hot Donburi',
+            'Bento Box': 'Bento Box',
+            'Yakisoba': 'Yakisoba',
+            'Yaki udon': 'Yaki Udon',
+            'Kare Udon': 'Kare Udon',
+            'Dashi Spicy Shoyu Udon Soup Base': 'Udon Soup Base',
+            'Sides': 'Sides',
+            'Drinks': 'Drinks',
+            'Dessert': 'Dessert',
+            'Extra': 'Extra Sauces',
+        };
+
+        // Group data by category
+        const groupedData = {};
+        menuData.forEach(item => {
+            const cat = item.cat;
+            if (!groupedData[cat]) groupedData[cat] = [];
+            groupedData[cat].push(item);
+        });
+        const categories = Object.keys(groupedData);
+
+        // Featured dishes (hand-picked)
+        const featuredDishes = [
+            { zh: '三文鱼刺身', en: 'Sake Sashimi', price: 10.5, img: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=500&q=80',
+                catZH: '刺身', catEN: 'Sashimi' },
+            { zh: '彩虹卷', en: 'Rainbow Roll', price: 17.5, img: 'https://images.unsplash.com/photo-1553621042-f6e147245754?w=500&q=80',
+                catZH: '里卷', catEN: 'Uramaki Roll' },
+            { zh: '炸虾天妇罗', en: 'Prawn Tempura', price: 12.5, img: 'https://images.unsplash.com/photo-1615361200141-f45040f367be?w=500&q=80',
+                catZH: '前菜', catEN: 'Appetiser' },
+            { zh: '特选刺身盛合', en: 'Deluxe Sashimi Platter', price: 58.8,
+                img: 'https://images.unsplash.com/photo-1559410546-0bcdb1c1f1f7?w=500&q=80', catZH: '刺身', catEN: 'Sashimi' },
+            { zh: '鳗鱼便当', en: 'Unagi Bento Box', price: 18.9, img: 'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=500&q=80',
+                catZH: '便当盒', catEN: 'Bento Box' },
+            { zh: '烤肋眼牛排', en: 'Grilled Rib Eye Steak', price: 19.8,
+                img: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=500&q=80', catZH: '热丼', catEN: 'Hot Donburi' },
+        ];
+
+        // Reviews data
+        const reviewsData = [
+            { name: 'Sophie L.', zh: '非常棒的日料体验！三文鱼刺身非常新鲜，服务也特别好。强烈推荐！',
+                en: 'Amazing Japanese food experience! The salmon sashimi was incredibly fresh and the service was excellent. Highly recommended!',
+                date: '2024-11-15', avatar: 'https://ui-avatars.com/api/?name=Sophie+L&background=c9a962&color=fff&size=100' },
+            { name: 'James W.', zh: '作为英式日料，这家店完美融合了两国风味。彩虹卷是我吃过最好的！',
+                en: 'As British-Japanese fusion, this place perfectly blends both cuisines. The Rainbow Roll is the best I\'ve ever had!',
+                date: '2024-10-28', avatar: 'https://ui-avatars.com/api/?name=James+W&background=6b5a47&color=fff&size=100' },
+            { name: 'Emily R.', zh: '外卖包装精美，食物品质一流。每次点餐都准时送达，鳗鱼便当是我的最爱。',
+                en: 'Beautiful takeaway packaging and top-notch food quality. Always delivered on time. The Unagi Bento is my favorite.',
+                date: '2024-11-02',
+            avatar: 'https://ui-avatars.com/api/?name=Emily+R&background=b5343a&color=fff&size=100' },
+            { name: 'Daniel K.', zh: '环境禅意十足，食物精致美味。炸虾天妇罗外酥里嫩，非常推荐！',
+                en: 'Zen atmosphere and exquisite food. The Prawn Tempura is crispy on the outside and tender inside. Highly recommend!',
+                date: '2024-11-20', avatar: 'https://ui-avatars.com/api/?name=Daniel+K&background=4a7c64&color=fff&size=100' },
+        ];
+
+        // ==================== STATE ====================
+        let currentLang = 'zh'; // 'zh' | 'en'
+        let openAccordionCat = null;
+
+        // ==================== DOM REFS ====================
+        const welcomeOverlay = document.getElementById('welcomeOverlay');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+        const modalCloseBtn2 = document.getElementById('modalCloseBtn2');
+        const modalBookBtn = document.getElementById('modalBookBtn');
+        const langSwitch = document.getElementById('langSwitch');
+        const langOptions = document.querySelectorAll('.lang-option');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        const backToTop = document.getElementById('backToTop');
+        const navbar = document.getElementById('navbar');
+        const featuredGrid = document.getElementById('featuredGrid');
+        const menuAccordionContainer = document.getElementById('menuAccordionContainer');
+        const menuControls = document.getElementById('menuControls');
+        const menuSearch = document.getElementById('menuSearch');
+        const reviewsGrid = document.getElementById('reviewsGrid');
+        const bookingForm = document.getElementById('bookingForm');
+        const formSuccess = document.getElementById('formSuccess');
+        const bookingFormWrap = document.getElementById('bookingFormWrap');
+
+        // ==================== FUNCTIONS ====================
+
+        function closeModal() {
+            welcomeOverlay.classList.add('hidden');
+        }
+
+        function scrollToBooking() {
+            closeModal();
+            document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function setLang(lang) {
+            currentLang = lang;
+            // Update lang switch buttons
+            langOptions.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+            // Update all elements with data-lang attributes
+            document.querySelectorAll('[data-lang-zh]').forEach(el => {
+                if (el.dataset.langZh && el.dataset.langEn) {
+                    el.innerHTML = lang === 'zh' ? el.dataset.langZh : el.dataset.langEn;
+                }
+            });
+            // Update placeholders
+            document.querySelectorAll('[data-lang-zh-placeholder]').forEach(el => {
+                el.placeholder = lang === 'zh' ? el.dataset.langZhPlaceholder : el.dataset
+                    .langEnPlaceholder;
+            });
+            // Update form labels
+            document.querySelectorAll('label[data-lang-zh]').forEach(el => {
+                el.textContent = lang === 'zh' ? el.dataset.langZh : el.dataset.langEn;
+            });
+            // Update buttons with data-lang
+            document.querySelectorAll('button[data-lang-zh]').forEach(el => {
+                if (el.dataset.langZh && el.dataset.langEn && !el.classList.contains('lang-option')) {
+                    el.textContent = lang === 'zh' ? el.dataset.langZh : el.dataset.langEn;
+                }
+            });
+            // Update nav links
+            document.querySelectorAll('.nav-links a[data-lang-zh]').forEach(el => {
+                el.textContent = lang === 'zh' ? el.dataset.langZh : el.dataset.langEn;
+            });
+            // Update section labels
+            document.querySelectorAll('.en-label[data-lang-zh]').forEach(el => {
+                el.textContent = lang === 'zh' ? el.dataset.langZh : el.dataset.langEn;
+            });
+            // Update hero badge
+            const heroBadge = document.querySelector('.hero-badge[data-lang-zh]');
+            if (heroBadge) {
+                heroBadge.textContent = lang === 'zh' ? heroBadge.dataset.langZh : heroBadge.dataset.langEn;
+            }
+            // Update hero h1
+            const heroH1 = document.querySelector('.hero h1[data-lang-zh]');
+            if (heroH1) {
+                heroH1.innerHTML = lang === 'zh' ? heroH1.dataset.langZh : heroH1.dataset.langEn;
+            }
+            // Update hero p
+            const heroP = document.querySelector('.hero p[data-lang-zh]');
+            if (heroP) {
+                heroP.textContent = lang === 'zh' ? heroP.dataset.langZh : heroP.dataset.langEn;
+            }
+            // Update modal elements
+            const modalLogo = document.querySelector('.modal-logo[data-lang-zh]');
+            if (modalLogo) modalLogo.textContent = lang === 'zh' ? modalLogo.dataset.langZh : modalLogo.dataset
+            .langEn;
+            const modalDesc = document.querySelector('.modal-desc[data-lang-zh]');
+            if (modalDesc) modalDesc.textContent = lang === 'zh' ? modalDesc.dataset.langZh : modalDesc.dataset.langEn;
+            const modalBookBtnEl = document.getElementById('modalBookBtn');
+            if (modalBookBtnEl) modalBookBtnEl.textContent = lang === 'zh' ? modalBookBtnEl.dataset.langZh :
+                modalBookBtnEl.dataset.langEn;
+            const modalCloseBtn2El = document.getElementById('modalCloseBtn2');
+            if (modalCloseBtn2El) modalCloseBtn2El.textContent = lang === 'zh' ? modalCloseBtn2El.dataset.langZh :
+                modalCloseBtn2El.dataset.langEn;
+            // Update section titles
+            document.querySelectorAll('.section-title h2[data-lang-zh]').forEach(el => {
+                el.textContent = lang === 'zh' ? el.dataset.langZh : el.dataset.langEn;
+            });
+            // Update booking form heading
+            const bookingH3 = document.querySelector('#bookingFormWrap h3[data-lang-zh]');
+            if (bookingH3) bookingH3.textContent = lang === 'zh' ? bookingH3.dataset.langZh : bookingH3.dataset
+            .langEn;
+            // Update form success
+            const formSuccessSpan = document.querySelector('#formSuccess span[data-lang-zh]');
+            if (formSuccessSpan) formSuccessSpan.textContent = lang === 'zh' ? formSuccessSpan.dataset.langZh :
+                formSuccessSpan.dataset.langEn;
+            // Update footer
+            const footerP = document.querySelector('.footer p[data-lang-zh]');
+            if (footerP) footerP.textContent = lang === 'zh' ? footerP.dataset.langZh : footerP.dataset.langEn;
+            // Re-render dynamic content
+            renderFeaturedDishes();
+            renderMenuAccordion();
+            renderReviews();
+            renderMenuControls();
+            updateMenuSearchPlaceholder();
+        }
+
+        function updateMenuSearchPlaceholder() {
+            const el = document.getElementById('menuSearch');
+            if (el) {
+                el.placeholder = currentLang === 'zh' ? '搜索菜品...' : 'Search dishes...';
+            }
+        }
+
+        function renderFeaturedDishes() {
+            featuredGrid.innerHTML = featuredDishes.map(d => `
+            <div class="dish-card">
+              <img class="dish-card-img" src="${d.img}" alt="${currentLang === 'zh' ? d.zh : d.en}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80'">
+              <div class="dish-card-body">
+                <div class="dish-card-cat">${currentLang === 'zh' ? d.catZH : d.catEN}</div>
+                <h3>${currentLang === 'zh' ? d.zh : d.en}</h3>
+                <div class="en-name">${currentLang === 'zh' ? d.en : d.zh}</div>
+                <div class="price">${d.price.toFixed(2)}</div>
+              </div>
+            </div>
+          `).join('');
+        }
+
+        function renderMenuControls() {
+            const allBtn = `<button class="menu-filter-btn active" data-filter="all">${currentLang === 'zh' ? '全部' : 'All'}</button>`;
+            const catBtns = categories.map(cat => {
+                const name = currentLang === 'zh' ? (catNamesZH[cat] || cat) : (catNamesEN[cat] || cat);
+                return `<button class="menu-filter-btn" data-filter="${cat}">${name}</button>`;
+            }).join('');
+            menuControls.innerHTML = allBtn + catBtns;
+
+            // Add click events
+            menuControls.querySelectorAll('.menu-filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    menuControls.querySelectorAll('.menu-filter-btn').forEach(b => b.classList
+                        .remove('active'));
+                    btn.classList.add('active');
+                    const filter = btn.dataset.filter;
+                    filterMenuAccordion(filter);
+                });
+            });
+        }
+
+        function filterMenuAccordion(filter) {
+            const accordions = menuAccordionContainer.querySelectorAll('.accordion');
+            const searchVal = menuSearch.value.trim().toLowerCase();
+            accordions.forEach(acc => {
+                const cat = acc.dataset.cat;
+                if (filter === 'all' || cat === filter) {
+                    acc.style.display = '';
+                } else {
+                    acc.style.display = 'none';
+                }
+            });
+            // Also apply search filter
+            if (searchVal) {
+                applySearchFilter(searchVal);
+            }
+        }
+
+        function applySearchFilter(searchVal) {
+            const accordions = menuAccordionContainer.querySelectorAll('.accordion');
+            accordions.forEach(acc => {
+                const cat = acc.dataset.cat;
+                const items = groupedData[cat] || [];
+                const hasMatch = items.some(item => {
+                    return item.zh.toLowerCase().includes(searchVal) ||
+                        item.en.toLowerCase().includes(searchVal) ||
+                        item.code.toLowerCase().includes(searchVal) ||
+                        String(item.price).includes(searchVal);
+                });
+                if (searchVal === '') {
+                    // Reset to filter button state
+                    const activeFilter = menuControls.querySelector('.menu-filter-btn.active');
+                    if (activeFilter && activeFilter.dataset.filter !== 'all' && activeFilter.dataset
+                        .filter !== cat) {
+                        acc.style.display = 'none';
+                    } else {
+                        acc.style.display = '';
+                    }
+                } else {
+                    acc.style.display = hasMatch ? '' : 'none';
+                }
+                // If has match and searchVal not empty, auto-open
+                if (hasMatch && searchVal !== '') {
+                    acc.classList.add('open');
+                }
+            });
+        }
+
+        function renderMenuAccordion() {
+            menuAccordionContainer.innerHTML = categories.map(cat => {
+                const catName = currentLang === 'zh' ? (catNamesZH[cat] || cat) : (catNamesEN[cat] || cat);
+                const items = groupedData[cat];
+                const count = items.length;
+                const rows = items.map(item => {
+                    const displayName = currentLang === 'zh' ? item.zh : item.en;
+                    const subName = currentLang === 'zh' ? item.en : item.zh;
+                    return `
+                <tr>
+                  <td class="code-col">${item.code || '-'}</td>
+                  <td><strong>${displayName}</strong><br><small style="color:#8a857c;">${subName}</small></td>
+                  <td class="price-col">£${item.price.toFixed(2)}</td>
+                </tr>`;
+                }).join('');
+                return `
+              <div class="accordion" data-cat="${cat}">
+                <div class="accordion-header">
+                  <span class="cat-name">${catName}</span>
+                  <span class="cat-count">${count} ${currentLang === 'zh' ? '个菜品' : 'items'}</span>
+                  <span class="accordion-arrow">▼</span>
+                </div>
+                <div class="accordion-body">
+                  <div class="accordion-body-inner">
+                    <table class="menu-table">
+                      <thead>
+                        <tr>
+                          <th>${currentLang === 'zh' ? '编号' : 'Code'}</th>
+                          <th>${currentLang === 'zh' ? '菜品名称' : 'Dish Name'}</th>
+                          <th>${currentLang === 'zh' ? '价格' : 'Price'}</th>
+                        </tr>
+                      </thead>
+                      <tbody>${rows}</tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>`;
+            }).join('');
+
+            // Add accordion click events
+            menuAccordionContainer.querySelectorAll('.accordion-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const accordion = header.parentElement;
+                    accordion.classList.toggle('open');
+                });
+            });
+        }
+
+        function renderReviews() {
+            reviewsGrid.innerHTML = reviewsData.map(r => `
+            <div class="review-card">
+              <img class="review-avatar" src="${r.avatar}" alt="${r.name}" loading="lazy" onerror="this.style.background='#e8e3da';this.style.color='#6b5a47';this.style.display='flex';this.style.alignItems='center';this.style.justifyContent='center';this.style.fontWeight='bold';this.style.fontSize='1.5rem';this.src='';this.alt='${r.name.charAt(0)}';">
+              <div class="stars">★★★★★</div>
+              <p class="review-text">"${currentLang === 'zh' ? r.zh : r.en}"</p>
+              <div class="review-author">${r.name}</div>
+              <div class="review-date">${r.date}</div>
+            </div>
+          `).join('');
+        }
+
+        // ==================== EVENT LISTENERS ====================
+        modalCloseBtn.addEventListener('click', closeModal);
+        modalCloseBtn2.addEventListener('click', closeModal);
+        modalBookBtn.addEventListener('click', scrollToBooking);
+        welcomeOverlay.addEventListener('click', function(e) {
+            if (e.target === welcomeOverlay) closeModal();
+        });
+
+        langOptions.forEach(btn => {
+            btn.addEventListener('click', () => {
+                setLang(btn.dataset.lang);
+            });
+        });
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+        });
+
+        // Close mobile menu when a link is clicked
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+            });
+        });
+
+        // Back to top
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+            // Navbar shadow
+            if (window.scrollY > 30) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Menu search
+        menuSearch.addEventListener('input', () => {
+            const val = menuSearch.value.trim().toLowerCase();
+            applySearchFilter(val);
+            // Reset filter buttons
+            if (val !== '') {
+                menuControls.querySelectorAll('.menu-filter-btn').forEach(b => b.classList.remove('active'));
+                const allBtn = menuControls.querySelector('[data-filter="all"]');
+                if (allBtn) allBtn.classList.add('active');
+            }
+        });
+
+        // Booking form submission
+        bookingForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(bookingForm);
+            fetch(bookingForm.action, {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        bookingForm.style.display = 'none';
+                        formSuccess.classList.add('show');
+                        setTimeout(() => {
+                            bookingForm.style.display = '';
+                            formSuccess.classList.remove('show');
+                            bookingForm.reset();
+                        }, 5000);
+                    } else {
+                        alert(currentLang === 'zh' ? '提交失败，请重试。' :
+                            'Submission failed. Please try again.');
+                    }
+                })
+                .catch(() => {
+                    // Fallback: allow normal form submission
+                    bookingForm.submit();
+                });
+        });
+
+        // Keyboard shortcut to close modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !welcomeOverlay.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+
+        // ==================== INITIAL RENDER ====================
+        setLang('zh');
+        renderFeaturedDishes();
+        renderMenuAccordion();
+        renderReviews();
+        renderMenuControls();
+        updateMenuSearchPlaceholder();
+
+        // Open first accordion by default
+        setTimeout(() => {
+            const firstAccordion = menuAccordionContainer.querySelector('.accordion');
+            if (firstAccordion) firstAccordion.classList.add('open');
+        }, 300);
+
+        console.log('🏮 Garden Sushi Takeaway - 网站已就绪');
+        console.log('📋 菜品总数:', menuData.length);
+        console.log('📂 类别数量:', categories.length);
+        console.log('🌐 支持中英文切换');
+        console.log('📱 响应式布局已适配');
+    })();
+</script>
+</body>
+</html>
