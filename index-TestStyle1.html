@@ -537,19 +537,19 @@
 <footer><p>© 2025 The Honey Tree · 新中式英式餐饮 ｜ 匠心烹饪 ｜ 清新相聚</p></footer>
 
 <script>
-    // 菜品数据（使用稳定、可访问的免费图片链接，同时增加图片加载失败备用方案）
+    // 菜品数据（使用 Unsplash 稳定高清图片 + 备用 emoji 占位）
     const dishesData = {
         zh: [
-            { name: "盐焗鸡翅", desc: "外酥里嫩，经典英式盐焗风味，搭配特调椒盐", price: "£8.80", img: "https://cdn.pixabay.com/photo/2019/09/19/14/20/chicken-wings-4489523_640.jpg" },
-            { name: "咖喱酱汁鸡块", desc: "浓郁咖喱，微甜微辣，伦敦街头人气王", price: "£9.50", img: "https://cdn.pixabay.com/photo/2020/10/18/21/27/chicken-5666289_640.jpg" },
-            { name: "鸡蛋炒饭", desc: "镬气十足，粒粒分明，搭配鸡蛋与青豆", price: "£7.20", img: "https://cdn.pixabay.com/photo/2017/06/27/15/33/fried-rice-2447832_640.jpg" },
-            { name: "迷你春卷", desc: "酥脆外皮，蔬菜内馅，蘸甜辣酱更佳", price: "£8.30", img: "https://cdn.pixabay.com/photo/2020/05/28/10/29/spring-rolls-5231632_640.jpg" }
+            { name: "盐焗鸡翅", desc: "外酥里嫩，经典英式盐焗风味，搭配特调椒盐", price: "£8.80", img: "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&h=400&fit=crop" },
+            { name: "咖喱酱汁鸡块", desc: "浓郁咖喱，微甜微辣，伦敦街头人气王", price: "£9.50", img: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=400&h=400&fit=crop" },
+            { name: "鸡蛋炒饭", desc: "镬气十足，粒粒分明，搭配鸡蛋与青豆", price: "£7.20", img: "https://images.unsplash.com/photo-1633547702686-1e4d800aba50?w=400&h=400&fit=crop" },
+            { name: "迷你春卷", desc: "酥脆外皮，蔬菜内馅，蘸甜辣酱更佳", price: "£8.30", img: "https://images.unsplash.com/photo-1626358339978-0b4b1f2da42f?w=400&h=400&fit=crop" }
         ],
         en: [
-            { name: "Salt & Pepper Chicken Wings", desc: "Crispy outside, tender inside, classic British Chinese salt & pepper spice", price: "£8.80", img: "https://cdn.pixabay.com/photo/2019/09/19/14/20/chicken-wings-4489523_640.jpg" },
-            { name: "Curry Sauce Chicken", desc: "Rich aromatic curry, sweet and mildly spicy, a London favourite", price: "£9.50", img: "https://cdn.pixabay.com/photo/2020/10/18/21/27/chicken-5666289_640.jpg" },
-            { name: "Egg Fried Rice", desc: "Wok hei aroma, fluffy rice with egg and peas", price: "£7.20", img: "https://cdn.pixabay.com/photo/2017/06/27/15/33/fried-rice-2447832_640.jpg" },
-            { name: "Mini Vegetable Spring Rolls", desc: "Crispy pastry, veggie filling, perfect with sweet chilli dip", price: "£8.30", img: "https://cdn.pixabay.com/photo/2020/05/28/10/29/spring-rolls-5231632_640.jpg" }
+            { name: "Salt & Pepper Chicken Wings", desc: "Crispy outside, tender inside, classic British Chinese salt & pepper spice", price: "£8.80", img: "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&h=400&fit=crop" },
+            { name: "Curry Sauce Chicken", desc: "Rich aromatic curry, sweet and mildly spicy, a London favourite", price: "£9.50", img: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=400&h=400&fit=crop" },
+            { name: "Egg Fried Rice", desc: "Wok hei aroma, fluffy rice with egg and peas", price: "£7.20", img: "https://images.unsplash.com/photo-1633547702686-1e4d800aba50?w=400&h=400&fit=crop" },
+            { name: "Mini Vegetable Spring Rolls", desc: "Crispy pastry, veggie filling, perfect with sweet chilli dip", price: "£8.30", img: "https://images.unsplash.com/photo-1626358339978-0b4b1f2da42f?w=400&h=400&fit=crop" }
         ]
     };
 
@@ -566,8 +566,9 @@
         data.forEach((dish, idx) => {
             const slideDiv = document.createElement('div');
             slideDiv.className = 'carousel-slide';
+            // 添加 onerror 备用：如果图片加载失败，显示一个带有菜品图标的占位符
             slideDiv.innerHTML = `
-                <img class="dish-img" src="${dish.img}" alt="${dish.name}" loading="lazy" onerror="this.src='https://placehold.co/400x400?text=🍽️+Dish'">
+                <img class="dish-img" src="${dish.img}" alt="${dish.name}" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x400?text=🍗+${encodeURIComponent(dish.name.charAt(0))}'">
                 <h3 class="dish-title">${dish.name}</h3>
                 <p class="dish-desc">${dish.desc}</p>
                 <span class="dish-price">${dish.price}</span>
@@ -638,7 +639,7 @@
         `).join('');
     }
 
-    // 翻译映射（简略版，完整版已包含主要文本）
+    // 翻译映射
     const translations = {
         zh: {
             nav_home: "首页", nav_menu: "菜单PDF", nav_dishes: "特色菜品", nav_about: "关于", nav_reserve: "订座",
@@ -661,7 +662,6 @@
     };
 
     function updatePageLanguage() {
-        // 更新所有 data-i18n 文本
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
             if (translations[currentLang][key]) {
@@ -672,14 +672,12 @@
                 }
             }
         });
-        // 更新 placeholder 专用字段
         document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
             const key = el.getAttribute('data-i18n-placeholder');
             if (translations[currentLang][key]) el.placeholder = translations[currentLang][key];
         });
         renderCarousel();
         renderReviews();
-        // 更新语言按钮样式
         document.querySelectorAll('.lang-btn').forEach(btn => {
             if (btn.getAttribute('data-lang') === currentLang) btn.classList.add('active');
             else btn.classList.remove('active');
@@ -696,12 +694,10 @@
         updateCarouselPosition();
     }
 
-    // 初始化语言
     const savedLang = localStorage.getItem('honeytree_lang');
     if (savedLang === 'zh' || savedLang === 'en') setLanguage(savedLang);
     else setLanguage('zh');
 
-    // 绑定语言切换按钮
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const lang = btn.getAttribute('data-lang');
