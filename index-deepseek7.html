@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>The Honey Tree | 新中式英式餐厅</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FEFAF5;
+            color: #2C2A29;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, .logo, .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 500;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        :root {
+            --sage: #9BBF8F;
+            --sage-light: #E6F0E2;
+            --terracotta: #E09D6F;
+            --honey: #F7C873;
+            --deep-wood: #5E4B3C;
+            --bg-warm: #FEFAF5;
+            --card-white: #FFFFFF;
+            --shadow-sm: 0 8px 20px rgba(0,0,0,0.03), 0 2px 6px rgba(0,0,0,0.05);
+            --shadow-md: 0 12px 28px rgba(0,0,0,0.08);
+            --border-radius: 24px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .logo h1 {
+            font-size: 1.8rem;
+            letter-spacing: -0.5px;
+            color: var(--deep-wood);
+        }
+        .logo span {
+            font-size: 0.85rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            color: var(--terracotta);
+            display: block;
+            letter-spacing: 1px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #4A3B2F;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover {
+            color: var(--terracotta);
+        }
+        .lang-switch {
+            display: flex;
+            gap: 8px;
+            background: var(--card-white);
+            padding: 5px 10px;
+            border-radius: 60px;
+            box-shadow: var(--shadow-sm);
+        }
+        .lang-btn {
+            background: none;
+            border: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            padding: 5px 12px;
+            border-radius: 40px;
+            transition: all 0.2s ease;
+            color: #5a5a5a;
+        }
+        .lang-btn.active {
+            background: var(--sage);
+            color: white;
+        }
+
+        /* Hero区 */
+        .hero {
+            position: relative;
+            background-image: url('https://images.pexels.com/photos/3186654/pexels-photo-3186654.jpeg?auto=compress&cs=tinysrgb&w=1600');
+            background-size: cover;
+            background-position: center 40%;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-radius: 0 0 48px 48px;
+            margin-bottom: 20px;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 0 0 48px 48px;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 600;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            margin-bottom: 1rem;
+        }
+        .hero-sub {
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.95);
+            margin-bottom: 2rem;
+        }
+        .hero-btn {
+            background: var(--honey);
+            color: #2C2A29;
+            border: none;
+            padding: 14px 42px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.25s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .hero-btn:hover {
+            background: #e5b347;
+            transform: translateY(-3px);
+        }
+
+        section {
+            padding: 70px 0;
+            border-bottom: 1px solid rgba(155, 191, 143, 0.2);
+        }
+        .section-title {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--honey);
+            border-radius: 4px;
+        }
+
+        /* PDF卡片 */
+        .pdf-card, .about-card, .map-card {
+            background: var(--card-white);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .pdf-card {
+            text-align: center;
+            background: linear-gradient(135deg, #FFFFFF, #FCF9F4);
+        }
+        .btn-pdf {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--sage);
+            color: #2C2A29;
+            padding: 14px 32px;
+            border-radius: 60px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-top: 20px;
+            font-size: 1.1rem;
+            border: 1px solid #C2D9B5;
+        }
+        .btn-pdf:hover {
+            background: #8BB07C;
+            transform: scale(1.02);
+        }
+
+        /* 轮播样式 */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 28px;
+            background: #F4F0E9;
+            box-shadow: var(--shadow-sm);
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .carousel-slide {
+            flex: 0 0 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1.5rem;
+            text-align: center;
+        }
+        .dish-img {
+            width: 220px;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 1.5rem;
+            border: 4px solid white;
+            background-color: #e9e2d8;
+        }
+        .dish-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            font-family: 'Playfair Display', serif;
+            color: var(--deep-wood);
+            margin-bottom: 0.5rem;
+        }
+        .dish-desc {
+            max-width: 500px;
+            color: #5E5A55;
+            margin-bottom: 0.75rem;
+        }
+        .dish-price {
+            font-weight: 700;
+            color: var(--terracotta);
+            font-size: 1.2rem;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.8);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--deep-wood);
+            transition: 0.2s;
+            z-index: 10;
+        }
+        .carousel-btn:hover {
+            background: var(--honey);
+            color: white;
+        }
+        .btn-prev { left: 16px; }
+        .btn-next { right: 16px; }
+        .dots {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: #D4C9BC;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .dot.active {
+            background: var(--sage);
+            width: 24px;
+            border-radius: 10px;
+        }
+        @media (max-width: 768px) {
+            .dish-img { width: 150px; height: 150px; }
+            .dish-title { font-size: 1.4rem; }
+            .carousel-btn { width: 32px; height: 32px; font-size: 0.9rem; }
+            .hero-title { font-size: 2.5rem; }
+            .section-title { font-size: 1.8rem; }
+            .form-row { grid-template-columns: 1fr; }
+            section { padding: 50px 0; }
+            .navbar { flex-direction: column; text-align: center; }
+            .nav-links { justify-content: center; gap: 20px; }
+            .container { padding: 0 20px; }
+        }
+
+        /* 表单样式 */
+        .booking-form {
+            background: var(--card-white);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .form-group { margin-bottom: 1.2rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        label { font-weight: 600; display: block; margin-bottom: 6px; }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #E2DDD4;
+            border-radius: 20px;
+            font-family: 'Inter', sans-serif;
+            background: #FEFCF8;
+        }
+        .btn-submit {
+            background: var(--deep-wood);
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+        }
+        .btn-submit:hover { background: var(--terracotta); }
+        .form-status { margin-top: 15px; text-align: center; }
+        .review-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        .review-card {
+            background: white;
+            border-radius: 28px;
+            padding: 1.6rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .stars { color: var(--honey); margin-bottom: 10px; }
+        .map-container iframe {
+            width: 100%;
+            height: 350px;
+            border: 0;
+            border-radius: 24px;
+        }
+        .address-text { margin-top: 16px; text-align: center; font-weight: 500; }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .social-icon {
+            background: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--deep-wood);
+            box-shadow: var(--shadow-sm);
+            transition: 0.2s;
+            text-decoration: none;
+        }
+        .social-icon:hover {
+            background: var(--sage);
+            color: white;
+            transform: translateY(-5px);
+        }
+        footer {
+            text-align: center;
+            padding: 32px;
+            font-size: 0.8rem;
+            color: #8C7A6B;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">
+                <h1>The Honey Tree</h1>
+                <span>British Chinese · Modern Serenity</span>
+            </div>
+            <div class="nav-links">
+                <a href="#hero" data-i18n="nav_home">首页</a>
+                <a href="#menu-pdf" data-i18n="nav_menu">菜单PDF</a>
+                <a href="#dishes" data-i18n="nav_dishes">特色菜品</a>
+                <a href="#about" data-i18n="nav_about">关于</a>
+                <a href="#booking" data-i18n="nav_reserve">订座</a>
+                <div class="lang-switch">
+                    <button class="lang-btn active" data-lang="zh">中文</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <!-- Hero 区 -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <h2 class="hero-title" data-i18n="hero_title">蜜树餐厅</h2>
+            <p class="hero-sub" data-i18n="hero_sub">经典英式中餐 · 新中式灵感 · 清新雅聚</p>
+            <button class="hero-btn" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})" data-i18n="hero_btn">预约桌位</button>
+        </div>
+    </section>
+
+    <!-- PDF 菜单 -->
+    <div class="container" id="menu-pdf">
+        <section>
+            <div class="pdf-card">
+                <i class="fas fa-utensils" style="font-size: 2.5rem; color: var(--sage);"></i>
+                <h3 style="margin: 16px 0 8px;" data-i18n="pdf_title">完整菜单 · 主厨甄选</h3>
+                <p data-i18n="pdf_desc">查看我们的 PDF 菜单，包含招牌盐焗系列、咖喱、点心等经典英式中餐</p>
+                <a href="12126.pdf" class="btn-pdf" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-file-pdf"></i> <span data-i18n="pdf_btn">浏览菜单 PDF</span>
+                </a>
+                <p style="font-size: 0.75rem; margin-top: 12px; color:#9B8F82;" data-i18n="pdf_note">点击直接查看完整菜单文件</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- 菜品轮播 -->
+    <div class="container" id="dishes">
+        <section>
+            <h2 class="section-title" data-i18n="dishes_title">主厨推荐</h2>
+            <div class="carousel-container">
+                <div class="carousel-track" id="carouselTrack"></div>
+                <button class="carousel-btn btn-prev" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-btn btn-next" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="dots" id="dotsContainer"></div>
+        </section>
+    </div>
+
+    <!-- 关于品牌 -->
+    <div class="container" id="about">
+        <section>
+            <h2 class="section-title" data-i18n="about_title">关于品牌</h2>
+            <div class="about-card">
+                <p class="about-text" data-i18n="about_p1">The Honey Tree 融合传统英式中餐的浓郁风味与清新现代摆盘，每一道菜都是东西方文化的桥梁。招牌盐焗鸡翅、香酥鸭及咖喱酱汁，选用本地优质食材，致敬伦敦街头的经典风味。</p>
+                <p class="about-text" data-i18n="about_p2">餐厅以“蜂蜜树”为名，象征丰收与甜蜜相聚。室内以浅木、陶土绿植营造新中式庭院感，让每位食客在轻松氛围里享受地道中式烟火气。</p>
+                <div class="about-signature">— The Honey Tree 团队</div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 预约表单 -->
+    <div class="container" id="booking">
+        <section>
+            <h2 class="section-title" data-i18n="booking_title">预约订座</h2>
+            <div class="booking-form">
+                <form id="web3form">
+                    <input type="hidden" name="access_key" value="ba4171ba-fb95-4e10-aab0-7dfb643a81fa">
+                    <input type="hidden" name="subject" value="New Booking - The Honey Tree">
+                    <div class="form-row">
+                        <div class="form-group"><label data-i18n="form_name">姓名</label><input type="text" name="name" required data-i18n-placeholder="form_name_ph"></div>
+                        <div class="form-group"><label data-i18n="form_email">电子邮箱</label><input type="email" name="email" required data-i18n-placeholder="form_email_ph"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label data-i18n="form_phone">电话</label><input type="tel" name="phone" data-i18n-placeholder="form_phone_ph"></div>
+                        <div class="form-group"><label data-i18n="form_date">预约日期</label><input type="date" name="date" required></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label data-i18n="form_time">时间</label><select name="time"><option>17:00</option><option>18:00</option><option>19:00</option><option>20:00</option><option>21:00</option></select></div>
+                        <div class="form-group"><label data-i18n="form_guests">人数</label><select name="guests"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6+</option></select></div>
+                    </div>
+                    <div class="form-group"><label data-i18n="form_message">特殊需求</label><textarea rows="3" name="message" data-i18n-placeholder="form_message_ph"></textarea></div>
+                    <button type="submit" class="btn-submit" data-i18n="form_submit">提交预约</button>
+                    <div id="formStatus" class="form-status"></div>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <!-- 顾客评价 -->
+    <div class="container">
+        <section>
+            <h2 class="section-title" data-i18n="reviews_title">顾客评价</h2>
+            <div class="review-grid" id="reviewsContainer"></div>
+        </section>
+    </div>
+
+    <!-- 地图 -->
+    <div class="container">
+        <section>
+            <h2 class="section-title" data-i18n="map_title">找到我们</h2>
+            <div class="map-card">
+                <div class="map-container"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2483.354517249445!2d-0.1277583!3d51.5072178!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604c38c8cd1d9%3A0xb78f2474b9a45aa9!2sChinatown%2C%20London!5e0!3m2!1sen!2suk!4v1710000000000!5m2!1sen!2suk" allowfullscreen=""></iframe></div>
+                <div class="address-text" data-i18n="address">伦敦中国城 爵禄街15号 · WC2H 7LH</div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 社交链接 -->
+    <div class="container">
+        <section>
+            <h2 class="section-title" data-i18n="social_title">社交空间</h2>
+            <div class="social-links">
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+            </div>
+            <p style="text-align:center; margin-top:20px;" data-i18n="social_tag">@thehoneytree 分享你的餐桌时光</p>
+        </section>
+    </div>
+</main>
+<footer><p>© 2025 The Honey Tree · 新中式英式餐饮 ｜ 匠心烹饪 ｜ 清新相聚</p></footer>
+
+<script>
+    // 菜品数据（使用稳定、可访问的免费图片链接，同时增加图片加载失败备用方案）
+    const dishesData = {
+        zh: [
+            { name: "盐焗鸡翅", desc: "外酥里嫩，经典英式盐焗风味，搭配特调椒盐", price: "£8.80", img: "https://cdn.pixabay.com/photo/2019/09/19/14/20/chicken-wings-4489523_640.jpg" },
+            { name: "咖喱酱汁鸡块", desc: "浓郁咖喱，微甜微辣，伦敦街头人气王", price: "£9.50", img: "https://cdn.pixabay.com/photo/2020/10/18/21/27/chicken-5666289_640.jpg" },
+            { name: "鸡蛋炒饭", desc: "镬气十足，粒粒分明，搭配鸡蛋与青豆", price: "£7.20", img: "https://cdn.pixabay.com/photo/2017/06/27/15/33/fried-rice-2447832_640.jpg" },
+            { name: "迷你春卷", desc: "酥脆外皮，蔬菜内馅，蘸甜辣酱更佳", price: "£8.30", img: "https://cdn.pixabay.com/photo/2020/05/28/10/29/spring-rolls-5231632_640.jpg" }
+        ],
+        en: [
+            { name: "Salt & Pepper Chicken Wings", desc: "Crispy outside, tender inside, classic British Chinese salt & pepper spice", price: "£8.80", img: "https://cdn.pixabay.com/photo/2019/09/19/14/20/chicken-wings-4489523_640.jpg" },
+            { name: "Curry Sauce Chicken", desc: "Rich aromatic curry, sweet and mildly spicy, a London favourite", price: "£9.50", img: "https://cdn.pixabay.com/photo/2020/10/18/21/27/chicken-5666289_640.jpg" },
+            { name: "Egg Fried Rice", desc: "Wok hei aroma, fluffy rice with egg and peas", price: "£7.20", img: "https://cdn.pixabay.com/photo/2017/06/27/15/33/fried-rice-2447832_640.jpg" },
+            { name: "Mini Vegetable Spring Rolls", desc: "Crispy pastry, veggie filling, perfect with sweet chilli dip", price: "£8.30", img: "https://cdn.pixabay.com/photo/2020/05/28/10/29/spring-rolls-5231632_640.jpg" }
+        ]
+    };
+
+    let currentLang = 'zh';
+    let currentSlide = 0;
+    let slidesCount = 0;
+
+    // 渲染轮播
+    function renderCarousel() {
+        const data = dishesData[currentLang];
+        const track = document.getElementById('carouselTrack');
+        if (!track) return;
+        track.innerHTML = '';
+        data.forEach((dish, idx) => {
+            const slideDiv = document.createElement('div');
+            slideDiv.className = 'carousel-slide';
+            slideDiv.innerHTML = `
+                <img class="dish-img" src="${dish.img}" alt="${dish.name}" loading="lazy" onerror="this.src='https://placehold.co/400x400?text=🍽️+Dish'">
+                <h3 class="dish-title">${dish.name}</h3>
+                <p class="dish-desc">${dish.desc}</p>
+                <span class="dish-price">${dish.price}</span>
+            `;
+            track.appendChild(slideDiv);
+        });
+        slidesCount = data.length;
+        updateCarouselPosition();
+        renderDots();
+    }
+
+    function updateCarouselPosition() {
+        const track = document.getElementById('carouselTrack');
+        if (track) track.style.transform = `translateX(-${currentSlide * 100}%)`;
+        const dots = document.querySelectorAll('.dot');
+        dots.forEach((dot, idx) => {
+            if (idx === currentSlide) dot.classList.add('active');
+            else dot.classList.remove('active');
+        });
+    }
+
+    function renderDots() {
+        const container = document.getElementById('dotsContainer');
+        if (!container) return;
+        container.innerHTML = '';
+        for (let i = 0; i < slidesCount; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (i === currentSlide) dot.classList.add('active');
+            dot.addEventListener('click', () => {
+                currentSlide = i;
+                updateCarouselPosition();
+            });
+            container.appendChild(dot);
+        }
+    }
+
+    function nextSlide() { currentSlide = (currentSlide + 1) % slidesCount; updateCarouselPosition(); }
+    function prevSlide() { currentSlide = (currentSlide - 1 + slidesCount) % slidesCount; updateCarouselPosition(); }
+
+    document.getElementById('nextBtn')?.addEventListener('click', nextSlide);
+    document.getElementById('prevBtn')?.addEventListener('click', prevSlide);
+
+    // 评价数据
+    const reviewsData = {
+        zh: [
+            { stars: 5, text: "太爱他家的盐焗鸡翅和咖喱酱！环境很清新，服务也很贴心，伦敦难得的新中式宝藏餐厅。", name: "Sarah L." },
+            { stars: 5, text: "春卷超级酥脆，鸡蛋炒饭锅气十足。菜单选择丰富，连吃一周都不会腻。", name: "Michael C." },
+            { stars: 4, text: "装修很出片，鸡块和咖喱很经典。预约很方便，下次带朋友来体验。", name: "Emma W." }
+        ],
+        en: [
+            { stars: 5, text: "Absolutely love the Salt & Pepper wings and curry sauce! Fresh interior and warm service. A hidden gem in London.", name: "Sarah L." },
+            { stars: 5, text: "Crispy spring rolls, egg fried rice with wok-hei. Extensive menu, I could eat here every day!", name: "Michael C." },
+            { stars: 4, text: "Beautiful decor, classic nuggets and curry. Booking was seamless, will come back with friends.", name: "Emma W." }
+        ]
+    };
+
+    function renderReviews() {
+        const container = document.getElementById('reviewsContainer');
+        if (!container) return;
+        const reviews = reviewsData[currentLang];
+        container.innerHTML = reviews.map(r => `
+            <div class="review-card">
+                <div class="stars">${'★'.repeat(r.stars)}${'☆'.repeat(5 - r.stars)}</div>
+                <div class="review-text">“${r.text}”</div>
+                <div class="reviewer">— ${r.name}</div>
+            </div>
+        `).join('');
+    }
+
+    // 翻译映射（简略版，完整版已包含主要文本）
+    const translations = {
+        zh: {
+            nav_home: "首页", nav_menu: "菜单PDF", nav_dishes: "特色菜品", nav_about: "关于", nav_reserve: "订座",
+            hero_title: "蜜树餐厅", hero_sub: "经典英式中餐 · 新中式灵感 · 清新雅聚", hero_btn: "预约桌位",
+            pdf_title: "完整菜单 · 主厨甄选", pdf_desc: "查看我们的 PDF 菜单，包含招牌盐焗系列、咖喱、点心等经典英式中餐", pdf_btn: "浏览菜单 PDF", pdf_note: "点击直接查看完整菜单文件",
+            dishes_title: "主厨推荐",
+            about_title: "关于品牌", about_p1: "The Honey Tree 融合传统英式中餐的浓郁风味与清新现代摆盘，每一道菜都是东西方文化的桥梁。招牌盐焗鸡翅、香酥鸭及咖喱酱汁，选用本地优质食材，致敬伦敦街头的经典风味。", about_p2: "餐厅以“蜂蜜树”为名，象征丰收与甜蜜相聚。室内以浅木、陶土绿植营造新中式庭院感，让每位食客在轻松氛围里享受地道中式烟火气。",
+            booking_title: "预约订座", form_name: "姓名", form_name_ph: "您的姓名", form_email: "电子邮箱", form_email_ph: "邮箱地址", form_phone: "电话", form_phone_ph: "联系电话", form_date: "预约日期", form_time: "时间", form_guests: "人数", form_message: "特殊需求", form_message_ph: "过敏源、庆祝场合等", form_submit: "提交预约",
+            reviews_title: "顾客评价", map_title: "找到我们", address: "伦敦中国城 爵禄街15号 · WC2H 7LH", social_title: "社交空间", social_tag: "@thehoneytree 分享你的餐桌时光"
+        },
+        en: {
+            nav_home: "Home", nav_menu: "Menu PDF", nav_dishes: "Signature Dishes", nav_about: "About", nav_reserve: "Book",
+            hero_title: "The Honey Tree", hero_sub: "British Chinese · Modern Neo-Chinese · Fresh Gathering", hero_btn: "Book a Table",
+            pdf_title: "Full Menu · Chef’s Selection", pdf_desc: "Browse our PDF menu featuring Salt & Pepper dishes, curry, dim sum", pdf_btn: "View Menu PDF", pdf_note: "Click to open full menu PDF file",
+            dishes_title: "Chef's Recommendations",
+            about_title: "Our Story", about_p1: "The Honey Tree blends rich flavours of British Chinese cuisine with a fresh, modern presentation. Each dish bridges East and West — from Salt & Pepper Chicken Wings to aromatic curry sauce, using locally sourced ingredients inspired by London's vibrant Chinatown.", about_p2: "Named after the 'Honey Tree', symbolising harvest and sweet gatherings. Our interior mixes light wood, terracotta, and greenery to create a neo-Chinese courtyard atmosphere where guests can enjoy authentic Chinese soul food in a relaxed setting.",
+            booking_title: "Reservation", form_name: "Full Name", form_name_ph: "Your name", form_email: "Email", form_email_ph: "email@example.com", form_phone: "Phone", form_phone_ph: "Contact number", form_date: "Date", form_time: "Time", form_guests: "Guests", form_message: "Special Requests", form_message_ph: "Allergies, celebrations", form_submit: "Submit Booking",
+            reviews_title: "Guest Reviews", map_title: "Find Us", address: "15 Gerrard Street, London Chinatown · WC2H 7LH", social_title: "Social Space", social_tag: "@thehoneytree share your moments"
+        }
+    };
+
+    function updatePageLanguage() {
+        // 更新所有 data-i18n 文本
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[currentLang][key]) {
+                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                    if (el.placeholder) el.placeholder = translations[currentLang][key];
+                } else {
+                    el.innerText = translations[currentLang][key];
+                }
+            }
+        });
+        // 更新 placeholder 专用字段
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-i18n-placeholder');
+            if (translations[currentLang][key]) el.placeholder = translations[currentLang][key];
+        });
+        renderCarousel();
+        renderReviews();
+        // 更新语言按钮样式
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            if (btn.getAttribute('data-lang') === currentLang) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
+        const footerP = document.querySelector('footer p');
+        if (footerP) footerP.innerText = currentLang === 'zh' ? '© 2025 The Honey Tree · 新中式英式餐饮 ｜ 匠心烹饪 ｜ 清新相聚' : '© 2025 The Honey Tree · British Chinese · Artisanal & Fresh';
+    }
+
+    function setLanguage(lang) {
+        currentLang = lang;
+        updatePageLanguage();
+        localStorage.setItem('honeytree_lang', lang);
+        currentSlide = 0;
+        updateCarouselPosition();
+    }
+
+    // 初始化语言
+    const savedLang = localStorage.getItem('honeytree_lang');
+    if (savedLang === 'zh' || savedLang === 'en') setLanguage(savedLang);
+    else setLanguage('zh');
+
+    // 绑定语言切换按钮
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const lang = btn.getAttribute('data-lang');
+            if (lang === 'zh' || lang === 'en') setLanguage(lang);
+        });
+    });
+
+    // Web3Form 提交
+    const form = document.getElementById('web3form');
+    const statusDiv = document.getElementById('formStatus');
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        statusDiv.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> ' + (currentLang === 'zh' ? '提交中...' : 'Submitting...');
+        const fd = new FormData(form);
+        try {
+            const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
+            const data = await res.json();
+            if (data.success) {
+                statusDiv.innerHTML = currentLang === 'zh' ? '✅ 预约成功！我们会尽快与您确认。' : '✅ Booking confirmed! We will contact you soon.';
+                statusDiv.style.color = '#9BBF8F';
+                form.reset();
+                setTimeout(() => statusDiv.innerHTML = '', 5000);
+            } else {
+                statusDiv.innerHTML = currentLang === 'zh' ? '❌ 提交失败，请重试。' : '❌ Submission failed.';
+                statusDiv.style.color = '#D96C6C';
+            }
+        } catch (err) {
+            statusDiv.innerHTML = currentLang === 'zh' ? '⚠️ 网络错误。' : '⚠️ Network error.';
+        }
+    });
+</script>
+</body>
+</html>
